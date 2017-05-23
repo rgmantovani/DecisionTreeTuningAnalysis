@@ -10,6 +10,9 @@ mainAnalysis = function(algo) {
   # load all files
   devtools::load_all(pkg = ".")
 
+  #----------------------
+  #----------------------
+
   # check Algorithm and if its dir with results is empty
   AVAILABLE.ALGOS = list.files(path="data/")
   checkmate::assertChoice(x=algo, choices=AVAILABLE.ALGOS, .var.name="algo") 
@@ -18,6 +21,11 @@ mainAnalysis = function(algo) {
   if(length(n.files) == 0) {
     stop(paste0("There is no result for algo: ", algo, "\n"))
   } 
+
+  cat(paste0("* Doing Analysis for algo: ", algo,"\n"))
+
+  #----------------------
+  #----------------------
 
   cat("* Checking required info for plots: \n")
   
@@ -46,7 +54,11 @@ mainAnalysis = function(algo) {
     stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")
   }
   cat("  - fanova: \t\tok\n")
-  
+
+  #----------------------
+  #----------------------
+
+
   # Calling Analysis
   runAnalysis(
     algo        = algo, 
@@ -57,16 +69,17 @@ mainAnalysis = function(algo) {
     convergence = TRUE
   )
 
+  cat("* Done\n")
+  cat("*******************************************\n")
+
 }
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-# parse params and call main
 # options(echo = TRUE) 
 # args = commandArgs(trailingOnly = TRUE)
 
-# Parse arguments (we expect the form --arg=value)
 # parseArgs = function(x) strsplit(sub("^--", "", x), "=")
 # argsDF = as.data.frame(do.call("rbind", parseArgs(args)))
 # argsL = as.list(as.character(argsDF$V2))

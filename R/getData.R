@@ -44,53 +44,59 @@ getAllRepetitions = function(algo, all.dirs) {
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-# getAllBestIds = function(all.dirs) {
+getAllBestIds = function(algo, all.dirs) {
 
-#   if(!dir.exists(path = "ids/")) {
-#     dir.create(path = "ids/")
-#   }
+  local.dir = paste("data", algo, "ids", sep="/")
+  if(!dir.exists(path = local.dir)) {
+    dir.create(path = local.dir)
+  }
 
-#   aux = lapply(all.dirs, function(data.dir) {
+
+  aux = lapply(all.dirs, function(data.dir) {
     
-#     # print(data.dir)
-#     data.name = gsub(x = data.dir, pattern = "data/tuningResults/", replacement = "")
-#     if(file.exists(path = paste0("ids/", data.name, ".RData"))) {
-#       # cat(" - Ids already existed \n")
-#       load(file = paste0("ids/", data.name, ".RData"))
-#     } else {
-#       # cat("- generating ids for the first time\n")
-#       inner.names = c("pso", "ga", "eda", "random", "mbo")
-#       tech.aux = lapply(inner.names, function(tech) {
+    # print(data.dir)
+    data.name = gsub(x = data.dir, pattern = paste0("data/|",algo,"|/results/"), replacement = "")
+    job.file = paste0(local.dir, "/", data.name, ".RData")
+    if(file.exists(path = job.file)) {
+      # cat(" - Ids already existed \n")
+      load(file = job.file)
+    } else {
+      # cat("- generating ids for the first time\n")
+      inner.names = c("pso", "ga", "eda", "random", "mbo", "irace")
+      tech.aux = lapply(inner.names, function(tech) {
    
-#       tech.dir = paste0(data.dir, "/classif.J48/", tech)
-#         if(!dir.exists(path = tech.dir)) {
-#           return (as.data.frame(matrix(data = NA, ncol = 1, nrow = 30)))
-#         }
+        tech.dir = paste0(data.dir, "/classif.J48/", tech)
+        if(!dir.exists(path = tech.dir)) {
+          return (as.data.frame(matrix(data = NA, ncol = 1, nrow = 30)))
+        }
 
-#         rep.dirs = list.files(path = tech.dir, full.names = TRUE)
-#         rep.aux = lapply(rep.dirs, function(rep) {
+        rep.dirs = list.files(path = tech.dir, full.names = TRUE)
+        rep.aux = lapply(rep.dirs, function(rep) {
         
-#           read = try(load(paste0(rep, "/opt_params_", data.name, ".RData"),verbose = FALSE), silent = TRUE)
-#           if (inherits(read, "try-error")) {
-#             return(data.frame())
-#           }
-#           traces.list = ret.params.list[[1]]$classif.J48.imputed.preproc.tuned
-#           ids = lapply(traces.list, function(trace) {
-#             df = as.data.frame(trace$opt.path)
-#             return(which.min(df$ber))
-#           })
-#           return(ids)
-#         })
-#         return(unlist(rep.aux))
-#       })
-#       ret = data.frame(do.call("cbind", tech.aux))
-#       colnames(ret) = TECHNIQUES[-1]
-#       save(ret, file = paste0("ids/", data.name, ".RData"))
-#     }
-#     return(ret)
-#   })
-#   return(aux)
-# }
+          read = try(load(paste0(rep, "/opt_params_", data.name, ".RData"),verbose = FALSE), silent = TRUE)
+          if (inherits(read, "try-error")) {
+            return(data.frame())
+          }
+          traces.list = ret.params.list[[1]][[1]]
+          ids = lapply(traces.list, function(trace) {
+            df = as.data.frame(trace$opt.path)
+            return(which.min(df$ber))
+          })
+          return(ids)
+        })
+        return(unlist(rep.aux))
+     
+      }) #tech.aux
+
+      ret = data.frame(do.call("cbind", tech.aux))
+      colnames(ret) = TECHNIQUES[-1]
+      save(ret, file = job.file)
+    }
+    return(ret)
+  })
+
+  return(aux)
+}
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------

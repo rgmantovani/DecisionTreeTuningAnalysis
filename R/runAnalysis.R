@@ -67,15 +67,30 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     df.tuning   = getTuningTimes(algo = algo, all.dirs = all.dirs)
     df.time     = rbind(df.training, df.tuning)
 
-    g = getRuntimePlot(df.time = df.time)
+    g = getRuntimePlot(df.time = df.time, ids.order = ids.order)
     ggsave(g, file = paste0("output/", algo,"_runtime.pdf"), dpi = 500, 
       width = 8, height = 4.6, units = "in")
     cat("ok\n")
+  
   }
 
-  # if(ids == TRUE) {
+  # TODO: generate again when Irace be finished (for J48)
+  # TODO: generate again when all be finished (for CART)
+  if(ids == TRUE) {
+    cat(" * Iterations Plot ... ")
+ 
+    fullIds = getAllBestIds(algo = algo, all.dirs = all.dirs)
+ 
+    g1 = getIdsBoxPlot(fullIds = fullIds)
+    ggsave(g1, file = paste0("output/", algo,"_iterations_boxplot.pdf"), dpi = 500, 
+       width = 5, height = 2.3, units = "in")
 
-  # }
+    g2 = getIdsHistoPlot(fullIds = fullIds)
+    ggsave(g2, file = paste0("output/", algo,"_iterations_histo.pdf"), dpi = 500,
+      width = 3.05, height = 6.62, units = "in")
+ 
+    cat("ok\n")
+  }
 
   # TODO: generate again when Irace be finished (for J48)
   # TODO: generate again when all be finished (for CART)

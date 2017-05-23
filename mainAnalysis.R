@@ -84,7 +84,7 @@ mainAnalysis = function(algo) {
 # argsDF = as.data.frame(do.call("rbind", parseArgs(args)))
 # argsL = as.list(as.character(argsDF$V2))
 # algo =  argsL[[1]]
-# algo = "classif.J48"
+algo = "classif.J48"
 
 mainAnalysis(algo = algo)
 

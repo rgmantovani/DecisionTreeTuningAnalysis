@@ -5,8 +5,7 @@ getRuntimePlot = function(df.time, ids.order) {
 
   df.temp = df.time
   df.temp$time = factor(df.temp$time, levels=c("tuning", "training", "testing"))
-  # df.temp$dataset = as.numeric(as.factor(df.temp$dataset)) 
-
+  
   df.temp[which(df.temp$technique == "mbo"), "technique"]    = "SMBO"
   df.temp[which(df.temp$technique == "eda"), "technique"]    = "EDA"
   df.temp[which(df.temp$technique == "ga"), "technique"]     = "GA"

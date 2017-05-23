@@ -51,7 +51,6 @@ getAllBestIds = function(algo, all.dirs) {
     dir.create(path = local.dir)
   }
 
-
   aux = lapply(all.dirs, function(data.dir) {
     
     # print(data.dir)
@@ -65,7 +64,7 @@ getAllBestIds = function(algo, all.dirs) {
       inner.names = c("pso", "ga", "eda", "random", "mbo", "irace")
       tech.aux = lapply(inner.names, function(tech) {
    
-        tech.dir = paste0(data.dir, "/classif.J48/", tech)
+        tech.dir = paste0(data.dir, "/", algo, "/", tech)
         if(!dir.exists(path = tech.dir)) {
           return (as.data.frame(matrix(data = NA, ncol = 1, nrow = 30)))
         }

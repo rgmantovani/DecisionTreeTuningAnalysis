@@ -94,12 +94,12 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
 
   # TODO: generate again when Irace be finished (for J48)
   # TODO: generate again when all be finished (for CART)
-  # if(correlation == TRUE) {
-  #   # Correlation plot
-  #   df.cor = getCorrelations(all.dirs = all.dirs)
-  #   cat(" - Spearman correlation plot\n")
-  #   getCorPlots(df.cor = df.cor)
-  # }
+  if(correlation == TRUE) {
+    # Correlation plot
+    df.cor = getCorrelations(algo = algo, all.dirs = all.dirs)
+    cat(" - Spearman correlation plot\n")
+    getCorPlots(df.cor = df.cor)
+  }
 
   # Just for some specific dataset ids
   if(curves == TRUE) {

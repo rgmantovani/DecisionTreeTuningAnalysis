@@ -6,6 +6,7 @@ library("ggplot2")
 library("gridExtra")
 library("checkmate")
 library("mlr")
+library("partykit")
 
 mlr::configureMlr(on.learner.error = "warn")
 mlr::configureMlr(show.info = TRUE)

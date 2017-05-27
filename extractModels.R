@@ -79,6 +79,8 @@ source("R/extractTrees.R")
 
 extractModels = function(algo) {
 
+  checkmate::assertChoice(x=algo, choices=AVAILABLE.ALGOS, .var.name="algo") 
+
   algo.dir = paste("data", algo, "models", sep="/")
   if(!dir.exists(path = algo.dir)) {
     dir.create(path = algo.dir)

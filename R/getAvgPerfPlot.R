@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-averagePerformancePlot = function(av.results, df.stats, put.annotations = TRUE) {
+getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
 
   df = av.results
   Best = colnames(df)[apply(df, 1, which.max)]
@@ -29,7 +29,6 @@ averagePerformancePlot = function(av.results, df.stats, put.annotations = TRUE) 
   g = g + theme(legend.key.height = unit(0.3, "cm"), legend.key.width = unit(0.4, "cm"))
   g = g + theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1, size = 5))
 
-
   if(put.annotations) {
     for(i in 1:nrow(df)) {
       g = g + annotate("text", x = i, y=0.05, label = df[i, "Best"], size = 1.8, angle = 90, 
@@ -49,7 +48,7 @@ averagePerformancePlot = function(av.results, df.stats, put.annotations = TRUE) 
   g = g + guides(shape=FALSE) +  guides(fill = FALSE)
 
   obj = list(g = g, ids.order = ids.order)
-  return(g)
+  return(obj)
 }
 
 #--------------------------------------------------------------------------------------------------

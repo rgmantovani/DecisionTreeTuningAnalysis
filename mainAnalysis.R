@@ -14,7 +14,6 @@ mainAnalysis = function(algo) {
   #----------------------
 
   # check Algorithm and if its dir with results is empty
-  AVAILABLE.ALGOS = list.files(path="data/")
   checkmate::assertChoice(x=algo, choices=AVAILABLE.ALGOS, .var.name="algo") 
 
   n.files = list.files(path = paste0("data/", algo), recursive=TRUE)
@@ -84,7 +83,8 @@ mainAnalysis = function(algo) {
 # argsDF = as.data.frame(do.call("rbind", parseArgs(args)))
 # argsL = as.list(as.character(argsDF$V2))
 # algo =  argsL[[1]]
-algo = "classif.J48"
+# algo = "classif.J48"
+algo = "classif.rpart"
 
 mainAnalysis(algo = algo)
 

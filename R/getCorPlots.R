@@ -23,8 +23,9 @@ getCorPlots = function(df.cor, algo.name) {
   g1 = g1 + scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
      midpoint = 0, limit = c(-1,1), space = "Lab", 
      name="Spearman\nCorrelation")
+  my.breaks = round(c(1, nrow(df.cor)/3, 2*(nrow(df.cor)/3), nrow(df.cor)))
   g1 = g1 + scale_x_continuous(limits=c(1, nrow(df.cor)), 
-    breaks=c(1, nrow(df.cor)/3, 2*(nrow(df.cor)/3), nrow(df.cor)))
+    breaks=my.breaks)
 
   #----------------------------
   # HPs x Performance correlation

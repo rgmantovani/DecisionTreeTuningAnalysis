@@ -58,12 +58,12 @@ getCorrData = function(algo, dataset, cor.dir) {
 
   job = paste0(cor.dir, "/", dataset, ".RData")
   if(file.exists(path = job)){
-    # cat(" - Correlations already calculated \n")
+    cat(" - Correlations already calculated \n")
     load(file = job)
   } else {
 
     cat("- generating corr for the first time\n")
-    # inner.names = c("pso", "ga", "eda", "random", "mbo", "irace")
+    inner.names = c("pso", "ga", "eda", "random", "mbo", "irace")
 
     tech.aux = lapply(inner.names, function(tech) {
       return(innerAuxTech(algo = algo, tech = tech, dataset = dataset))

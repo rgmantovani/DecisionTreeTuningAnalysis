@@ -68,12 +68,10 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     cat("ok\n")
   }
 
-
   #----------------------
   #----------------------
 
-  # TODO: generate again when Irace be finished (for J48)
-  # TODO: generate again when all be finished (for CART)
+  # TODO: Update plots (code is working)
   if(runtime == TRUE) {
     cat(" * Runtime plot ... ")
     df.training = getTrainingTime(algo = algo, all.dirs = all.dirs)
@@ -133,7 +131,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     if(algo == "classif.J48") {
        ggsave(plot = obj$g1, filename = paste0("output/", algo.name, "_CorrHPs.pdf"), 
         dpi = 500, width = 7, height = 5, units = "in")
-       ggsave(plot = obj$g2, filename = paste0("output/", algo.name, "_CorrAccpdf"), 
+       ggsave(plot = obj$g2, filename = paste0("output/", algo.name, "_CorrAcc.pdf"), 
         dpi = 500, width = 7, height = 2, units = "in")
     } else {
        ggsave(plot = obj$g1, filename = paste0("output/", algo.name, "_CorrHPs.pdf"), 
@@ -141,8 +139,31 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
        ggsave(plot = obj$g2, filename = paste0("output/", algo.name, "_CorrAcc.pdf"), 
         dpi = 500, width = 7, height = 2, units = "in")
     }
+    cat("ok\n")
 
   }
+
+  #----------------------
+  #----------------------
+
+  if(fanova == TRUE) {
+    cat(" - Fanova plot\n")
+    df = getFanovaData(algo = algo)
+
+    g = getFanovaPlot(df = df, algo.name = algo.name)
+    ggsave(g, filename = paste0("output/", algo.name, "_FAnova.pdf"), 
+     dpi = 500, width = 7, height = 5, units = "in")
+    cat("ok\n")
+  }
+
+  #----------------------
+  #----------------------
+
+  # TODO: 
+  # if(curves == TRUE) {
+  #   cat(" - curves\n")
+  #   cat("ok\n")
+  # }
 
 }
 

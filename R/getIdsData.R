@@ -6,8 +6,6 @@ innerAuxTechIds = function(algo, tech, dataset) {
   tech.dir = paste0("data/", algo, "/results/", dataset, "/", algo, "/", tech)
 
   if(!dir.exists(path = tech.dir)) {
-    print("aqui")
-    print(tech.dir)
     return(rep(x = NA, times = 30))
   }
 

@@ -2,7 +2,7 @@
 #--------------------------------------------------------------------------------------------------
 
 runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime = TRUE, 
-  ids = TRUE, correlation = TRUE, favnova = TRUE) {
+  ids = TRUE, correlation = TRUE, fanova = TRUE) {
 
   if(!dir.exists(path="output")) {
     dir.create(path="output")
@@ -27,7 +27,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   av.results   = data.frame(do.call("rbind", lapply(all.results, colMeans, TRUE)))
 
   # list with datasets names
-  datasets     = gsub(x = all.dirs, pattern = paste0("data/|", algo, "/results/"), replacement = "")
+  datasets = gsub(x = all.dirs, pattern = paste0("data/|", algo, "/results/"), replacement = "")
   rownames(av.results) = datasets
 
   # save table to run Friedman stat tests
@@ -57,7 +57,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
 
   # Getting data from Irace
   # Requires Tree data from rpart
-
+  models = FALSE
   if(models == TRUE) {
     cat(" * Average tree size plot ... ")
     df.info = getModelsInfo(algo = algo)
@@ -119,13 +119,12 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     cor.dir = paste("data", algo, "corr", sep="/")
     aux.dirs = list.files(paste("data", algo, "results", sep="/"))
     aux.cor = lapply(aux.dirs, function(dataset) {
-      print(dataset)
       ret = getCorrData(algo = algo, dataset = dataset, cor.dir = cor.dir)
       return(ret)
     })
 
     df.cor = do.call("rbind", aux.cor)
-    cat(" - Spearman correlation plot\n")
+    cat(" - Spearman correlation plot ... ")
     obj = getCorPlots(df.cor = df.cor, algo.name = algo.name)
 
     if(algo == "classif.J48") {
@@ -147,7 +146,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   #----------------------
 
   if(fanova == TRUE) {
-    cat(" - Fanova plot\n")
+    cat(" - Fanova plot ...")
     df = getFanovaData(algo = algo)
 
     g = getFanovaPlot(df = df, algo.name = algo.name)

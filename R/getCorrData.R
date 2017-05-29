@@ -58,7 +58,7 @@ getCorrData = function(algo, dataset, cor.dir) {
 
   job = paste0(cor.dir, "/", dataset, ".RData")
   if(file.exists(path = job)){
-    cat(" - Correlations already calculated \n")
+    # cat(" - Correlations already calculated \n")
     load(file = job)
   } else {
 

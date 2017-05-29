@@ -13,7 +13,7 @@ getTrainingTime = function(algo, all.dirs) {
   # For each one of the datasets
   aux = lapply(all.dirs, function(data.dir) {
     
-    print(data.dir)
+    # print(data.dir)
     data.name = gsub(x = data.dir, pattern = paste0("data/|",algo,"|/results/"), replacement = "")
     job.file = paste0(local.dir, data.name, ".RData")
 

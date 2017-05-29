@@ -14,7 +14,6 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
 
   df[,1] = factor(df[,1], levels = df[,1])
 
-  cat(" - ploting simple measure \n")
   df.aux = df$Sign
   df.melted = melt(df, id.vars = c(1,9:10)) 
 

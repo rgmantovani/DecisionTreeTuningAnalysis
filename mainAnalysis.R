@@ -7,13 +7,11 @@ mainAnalysis = function(algo) {
   cat("* Automated Hyper-parameter tuning Analysis\n")
   cat("*******************************************\n")
  
-  # load all files
   devtools::load_all(pkg = ".")
 
   #----------------------
   #----------------------
 
-  # check Algorithm and if its dir with results is empty
   checkmate::assertChoice(x=algo, choices=AVAILABLE.ALGOS, .var.name="algo") 
 
   n.files = list.files(path = paste0("data/", algo), recursive=TRUE)
@@ -21,7 +19,9 @@ mainAnalysis = function(algo) {
     stop(paste0("There is no result for algo: ", algo, "\n"))
   } 
 
+  cat("*******************************************\n")
   cat(paste0("* Doing Analysis for algo: ", algo,"\n"))
+  cat("*******************************************\n")
 
   #----------------------
   #----------------------
@@ -53,10 +53,11 @@ mainAnalysis = function(algo) {
     stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")
   }
   cat("  - fanova: \t\tok\n")
+  cat("*******************************************\n")
+
 
   #----------------------
   #----------------------
-
 
   # Calling Analysis
   runAnalysis(
@@ -65,26 +66,23 @@ mainAnalysis = function(algo) {
     models      = TRUE, 
     runtime     = TRUE, 
     ids         = TRUE, 
-    convergence = TRUE
+    correlation = TRUE,
+    fanova      = TRUE
   )
 
   cat("* Done\n")
   cat("*******************************************\n")
-
 }
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-# options(echo = TRUE) 
-# args = commandArgs(trailingOnly = TRUE)
-
-# parseArgs = function(x) strsplit(sub("^--", "", x), "=")
-# argsDF = as.data.frame(do.call("rbind", parseArgs(args)))
-# argsL = as.list(as.character(argsDF$V2))
-# algo =  argsL[[1]]
-# algo = "classif.J48"
-algo = "classif.rpart"
+options(echo = TRUE) 
+args = commandArgs(trailingOnly = TRUE)
+parseArgs = function(x) strsplit(sub("^--", "", x), "=")
+argsDF = as.data.frame(do.call("rbind", parseArgs(args)))
+argsL = as.list(as.character(argsDF$V2))
+algo =  argsL[[1]]
 
 mainAnalysis(algo = algo)
 

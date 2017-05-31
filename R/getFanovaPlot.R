@@ -1,13 +1,17 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getFanovaPlot = function(df, algo.name) {
+getFanovaPlot = function(df, algo.name, threshold = 0.001) {
 
   colnames(df) = gsub(x = colnames(df), pattern = "x", replacement="vs")
+
+  sel.ids = which((colMeans(df)/100) > threshold)
 
   ids = which(grepl("vs", colnames(df)))
   data.id = 1:nrow(df)
   temp = data.frame(cbind(data.id, df))
+  
+  temp = temp[, sel.ids]
   rownames(temp) = NULL
 
   melted.df = melt(temp, id.vars = 1)

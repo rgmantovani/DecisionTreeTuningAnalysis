@@ -13,31 +13,29 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
 
   cat(" * Loading required data \n")
 
-  algo.name    = gsub(x = algo, pattern="classif.", replacement = "")
-  algo.path    = paste("data", algo, "results", sep="/")
-  all.dirs     = list.files(path = algo.path, full.names = TRUE)
+  algo.name = gsub(x = algo, pattern="classif.", replacement = "")
+  algo.path = paste("data", algo, "results", sep="/")
+  all.dirs  = list.files(path = algo.path, full.names = TRUE)
 
   # all results from 30 repetitions
-  all.results  = getRepsResults(algo = algo, all.dirs = all.dirs)
+  all.results = getRepsResults(algo = algo, all.dirs = all.dirs)
 
   # statistical results
-  df.stats     = getStatsDf(all.results = all.results)
+  df.stats = getStatsDf(all.results = all.results)
 
   # average results
-  av.results   = data.frame(do.call("rbind", lapply(all.results, colMeans, TRUE)))
+  av.results = data.frame(do.call("rbind", lapply(all.results, colMeans, TRUE)))
 
   # list with datasets names
   datasets = gsub(x = all.dirs, pattern = paste0("data/|", algo, "/results/"), replacement = "")
   rownames(av.results) = datasets
 
   # save table to run Friedman stat tests
-  write.table(x = av.results, file = paste0("output/avg_", algo, ".txt"),  
+  write.table(x = av.results, file = paste0("output/avg_", algo.name, ".txt"),  
     sep = "\t", col.names = FALSE, row.names = FALSE)
 
   #----------------------
   #----------------------
-
-  # TODO: Update plots (code works)
 
   ids.order = NULL
 
@@ -51,13 +49,10 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     cat("ok\n")
   }
 
-
   #----------------------
   #----------------------
-
-  # Getting data from Irace
-  # Requires Tree data from rpart
-  models = FALSE
+  
+  # TODO: Update plots (code works)
   if(models == TRUE) {
     cat(" * Average tree size plot ... ")
     df.info = getModelsInfo(algo = algo)
@@ -71,9 +66,9 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   #----------------------
   #----------------------
 
-  # TODO: Update plots (code is working)
   if(runtime == TRUE) {
     cat(" * Runtime plot ... ")
+ 
     df.training = getTrainingTime(algo = algo, all.dirs = all.dirs)
     df.tuning   = getTuningTimes(algo = algo, all.dirs = all.dirs)
     df.time     = rbind(df.training, df.tuning)
@@ -81,14 +76,13 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     g = getRuntimePlot(df.time = df.time, ids.order = ids.order)
     ggsave(plot = g, filename = paste0("output/", algo.name, "_runtime.pdf"), dpi = 500, 
       width = 8, height = 4.6, units = "in")
-    cat("ok\n")
-  
+ 
+    cat("ok\n")  
   }
 
   #----------------------
   #----------------------
 
-  # TODO: Update plots (code is working)
   if(ids == TRUE) {
     cat(" * Iterations Plot ... ")
  
@@ -113,7 +107,6 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   #----------------------
   #----------------------
 
-  # TODO: Update plots (code is working)
   if(correlation == TRUE) {
 
     cor.dir = paste("data", algo, "corr", sep="/")
@@ -138,31 +131,24 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
        ggsave(plot = obj$g2, filename = paste0("output/", algo.name, "_CorrAcc.pdf"), 
         dpi = 500, width = 7, height = 2, units = "in")
     }
+  
     cat("ok\n")
-
   }
 
   #----------------------
   #----------------------
-
+ 
   if(fanova == TRUE) {
     cat(" - Fanova plot ...")
     df = getFanovaData(algo = algo)
 
-    g = getFanovaPlot(df = df, algo.name = algo.name)
+    #  Filtering HPs that do not contribute at least with 0.5% of the performance
+    g = getFanovaPlot(df = df, algo.name = algo.name, threshold = 0.005)
     ggsave(g, filename = paste0("output/", algo.name, "_FAnova.pdf"), 
-     dpi = 500, width = 7, height = 5, units = "in")
+     dpi = 500, width = 7, height = 2, units = "in")
+  
     cat("ok\n")
   }
-
-  #----------------------
-  #----------------------
-
-  # TODO: 
-  # if(curves == TRUE) {
-  #   cat(" - curves\n")
-  #   cat("ok\n")
-  # }
 
 }
 

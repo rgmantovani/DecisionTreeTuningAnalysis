@@ -21,26 +21,24 @@ getDatasetModelInfo = function(file) {
 
   load(file, verbose = FALSE)
 
-  # min, max, mean, median, sd (for each technique)
-  unique(df.full$tun)
   aux.tun = lapply(unique(df.full$tun), function(tech) {
 
     ids = which(df.full$tun == tech)
     temp = df.full[ids, ]
     
-    min.vec    = apply(temp[,1:4], 2, min)
+    min.vec = apply(temp[,1:(ncol(temp)-2)], 2, min, na.rm = TRUE)
     names(min.vec) = paste("min", names(min.vec), sep=".") 
 
-    max.vec    = apply(temp[,1:4], 2, max)
+    max.vec = apply(temp[,1:(ncol(temp)-2)], 2, max, na.rm = TRUE)
     names(max.vec) = paste("max", names(max.vec), sep=".") 
 
-    mean.vec   = apply(temp[,1:4], 2, mean)
+    mean.vec = apply(temp[,1:(ncol(temp)-2)], 2, mean, na.rm = TRUE)
     names(mean.vec) = paste("mean", names(mean.vec), sep=".") 
 
-    median.vec = apply(temp[,1:4], 2, median)
+    median.vec = apply(temp[,1:(ncol(temp)-2)], 2, median, na.rm = TRUE)
     names(median.vec) = paste("median", names(median.vec), sep=".") 
 
-    sd.vec     = apply(temp[,1:4], 2, sd)
+    sd.vec = apply(temp[,1:(ncol(temp)-2)], 2, sd, na.rm = TRUE)
     names(sd.vec) = paste("sd", names(sd.vec), sep=".") 
 
     ret = c(min.vec, max.vec, median.vec, mean.vec, sd.vec)

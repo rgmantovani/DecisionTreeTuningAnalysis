@@ -44,7 +44,7 @@ getCorPlots = function(df.cor, algo.name) {
      midpoint = 0, limit = c(-1,1), space = "Lab", 
      name="Spearman\nCorrelation")
   g2 = g2 + scale_x_continuous(limits=c(1, nrow(df.cor)), 
-    breaks=c(1, nrow(df.cor)/3, 2*(nrow(df.cor)/3), nrow(df.cor)))
+    breaks=my.breaks)
 
   obj = list(g1 = g1, g2 = g2)
   return(obj)

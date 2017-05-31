@@ -11,6 +11,7 @@ getIdsBoxPlot = function(fullIds, measure = "mean") {
   g = ggplot(df.melted, aes(x = variable, y = value))
   g = g + geom_boxplot(width=0.5, colour="black", fill="white", outlier.size=1.0)
   g = g + theme_classic()
+  g = g + scale_y_continuous(breaks=c(0, 100, 200, 300, 400, 500))
   g = g + ylab("(avg) Number of evaluations") + xlab("Tuning technique")
   return(g)
 

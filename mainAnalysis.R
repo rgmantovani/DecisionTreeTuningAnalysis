@@ -28,26 +28,25 @@ mainAnalysis = function(algo) {
 
   cat("* Checking required info for plots: \n")
   
-  # generates Ids
+  # generates convergence ids (iterations with best solutions)
   if(!checkSubdir(algo = algo, subdir="ids")) {
     stop("You did not generate info tuning. Plase, run the \'extractIds.R\' script first.\n")
   }
   cat("  - ids: \t\tok\n")
   
 
-  # generates models interpretability measures
+  # generates model interpretability measures
   if(!checkSubdir(algo = algo, subdir="models")) {
     stop("You did not generate info from models. Plase, run the \'extractModels.R\' script first.\n")
   }
   cat("  - models: \t\tok\n")
   
-  # generates correlation
+  # generates correlation bewteen hyper-parameters
   if(!checkSubdir(algo = algo, subdir = "corr")) {
     stop("You did not generate correlation info from HPs. Plase, run the \'extractCorr.R\' script first.\n")
   }
   cat("  - correlation: \tok\n")
   
-
   # fAnova is external
   if(!checkSubdir(algo = algo, subdir = "fanova")) {
     stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")

@@ -13,7 +13,6 @@ getTrainingTime = function(algo, all.dirs) {
   # For each one of the datasets
   aux = lapply(all.dirs, function(data.dir) {
     
-    # print(data.dir)
     data.name = gsub(x = data.dir, pattern = paste0("data/|",algo,"|/results/"), replacement = "")
     job.file = paste0(local.dir, data.name, ".RData")
 
@@ -48,7 +47,8 @@ getTrainingTime = function(algo, all.dirs) {
         }) # rep.aux
 
         tmp = unlist(rep.aux)
-        values = c(median(tmp, na.rm = TRUE), min(tmp, na.rm = TRUE), max(tmp, na.rm = TRUE), sd(tmp, na.rm = TRUE))
+        values = c(median(tmp, na.rm = TRUE), min(tmp, na.rm = TRUE), max(tmp, na.rm = TRUE), 
+          sd(tmp, na.rm = TRUE))
         df.ret = data.frame(t(values))
         df.ret$technique = tech
         df.ret$dataset   = data.name

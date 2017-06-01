@@ -39,16 +39,22 @@ renameVector = function(df, algo) {
 
 getFanovaData = function(algo) {
 
+  tun.dirs = list.files(path = paste0("data/", algo, "/results/"))
+
   fan.dir  = paste("data", algo, "fanova", sep="/")
   files = list.files(path = fan.dir)
-  aux = lapply(files, function(file) {
+
+  ids = which(gsub(x = files, pattern="rpart_|.csv", replacement="") %in% tun.dirs)
+  inter.files = files[ids]
+
+  aux = lapply(inter.files, function(file) {
     df = read.csv(file = paste0(fan.dir, "/", file), header = FALSE)
     df2 = renameVector(df = df, algo = algo)
     return(df2)
   })
 
   df = do.call("rbind", aux)
-  datasets = gsub(x = files, pattern = ".csv", replacement = "")
+  datasets = gsub(x = inter.files, pattern = ".csv", replacement = "")
   rownames(df) = datasets
 
   return(df)

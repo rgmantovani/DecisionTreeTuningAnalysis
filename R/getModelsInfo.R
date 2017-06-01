@@ -9,7 +9,7 @@ getModelsInfo = function(algo) {
   })
   
   df.info = do.call("rbind", aux)
-  data.id = rep(x=1:length(files), each=length(unique(aux[[1]]$technique)))
+  data.id = as.numeric(as.factor(df.info$dataset))
   ret = cbind(df.info, data.id)
   return(ret)
 }

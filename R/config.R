@@ -3,7 +3,6 @@
 
 library("reshape2")
 library("ggplot2")
-library("gridExtra")
 library("checkmate")
 library("mlr")
 library("partykit")

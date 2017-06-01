@@ -83,6 +83,8 @@ argsDF = as.data.frame(do.call("rbind", parseArgs(args)))
 argsL = as.list(as.character(argsDF$V2))
 algo =  argsL[[1]]
 
+
+# Calling execution
 mainAnalysis(algo = algo)
 
 #--------------------------------------------------------------------------------------------------

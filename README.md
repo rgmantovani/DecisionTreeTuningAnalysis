@@ -125,7 +125,8 @@ If you use our code/experiments in your research, please, cite [our paper]() whe
 @article{Mantovani:2017, 
   journal = {},
   title   = {},
-  author  = {Rafael G. Mantovani and Tom{\'{a}}s Horv{\'{a}}th, Ricardo Cerri, Andr{\'e} C. P. L. F. {de Carvalho}},
+  author  = {Rafael G. Mantovani and Tom{\'{a}}s Horv{\'{a}}th and Ricardo Cerri and
+		Joaquin Vanschoren and  Andr{\'e} C. P. L. F. {de Carvalho}},
   number  = {},
   volume  = {},
   year    = {},

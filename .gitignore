@@ -8,3 +8,7 @@ examples/
 info/
 draft/
 output/
+
+R/metaLearning.R
+
+metaAnalysis.R

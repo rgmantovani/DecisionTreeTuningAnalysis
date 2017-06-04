@@ -16,8 +16,7 @@ getFanovaPlot = function(df, algo.name, threshold = 0.001) {
 
   melted.df = melt(temp, id.vars = 1)
   melted.df$value = melted.df$value /100
-  # melted.df$variable = gsub(x=melted.df$variable, pattern="\\.", replacement=" ")
-
+ 
   g = ggplot(melted.df, aes(x = data.id, y = variable, fill = value))
   g = g + geom_tile() + theme_classic()
   g = g + xlab("Dataset") + ylab(paste(algo.name, "HPs or pair of HPs"))

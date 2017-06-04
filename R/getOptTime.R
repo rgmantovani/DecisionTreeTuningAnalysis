@@ -6,8 +6,6 @@ getAllRuntime = function(algo, all.dirs) {
   inner.names = c("defaults", "pso", "ga", "eda", "random", "mbo", "irace")
   aux = lapply(all.dirs, function(data.dir) {
 
-    # print(data.dir)
-
     data.name = gsub(x = data.dir, pattern = paste0("data/|",algo,"|/results/"), replacement = "")
     tech.aux = lapply(inner.names, function(tech) {
   

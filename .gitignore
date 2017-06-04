@@ -8,6 +8,7 @@ examples/
 info/
 draft/
 output/
+fanovaOutputs/
 
 R/metaLearning.R
 

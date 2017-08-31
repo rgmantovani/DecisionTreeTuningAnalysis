@@ -12,7 +12,7 @@ mlr::configureMlr(show.info = TRUE)
 
 BUDGET = 900
 
-AVAILABLE.ALGOS = c("classif.J48", "classif.rpart")
+AVAILABLE.ALGOS = c("classif.J48", "classif.rpart", "classif.ctree")
 
 TECHNIQUES = c("defaults", "PSO", "GA", "EDA", "RS", "SMBO", "Irace")
 

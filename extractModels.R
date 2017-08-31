@@ -53,7 +53,7 @@ source("R/extractTrees.R")
  
   if(!file.exists(job) & tun != "defaults") {
     print(job)
-    return(NULL)
+   return(NULL)
   }
 
   data.df = RWeka::read.arff(file = paste0("data/datasets/", dataset, ".arff"))
@@ -68,7 +68,10 @@ source("R/extractTrees.R")
     df.models = extractJ48Trees(job = job, task = task, lrn = lrn, tun = tun, seed = seed)
   } else if(algo == "classif.rpart") {
     df.models = extractRpartTrees(job = job, task = task, lrn = lrn, tun = tun, seed = seed)
-  } else {
+  } else if(algo == "classif.ctree") {
+    df.models = extractCTreeTrees(job = job, task = task, lrn = lrn, tun = tun, seed = seed)
+  }
+  else {
     stop("- Invalid classifier.\n")
   }
   return(df.models) 
@@ -89,7 +92,7 @@ extractModels = function(algo) {
   results = list.files(path = paste("data", algo, "results", sep="/"))
   aux.data = lapply(results, function(dataset) {
     print(dataset)
-    ret = .getDatasetResults(algo = algo, dataset = dataset, algo.dir) 
+    ret = .getDatasetResults(algo = algo, dataset = dataset, algo.dir = algo.dir) 
   })
   cat("\n Done ... \n")
 }

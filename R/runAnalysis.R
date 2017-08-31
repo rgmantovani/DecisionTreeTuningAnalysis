@@ -37,6 +37,19 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   #----------------------
   #----------------------
 
+  cat(" * Wilcoxon pair to pair plot ... ")
+  obj.agg = getStatMat(results = av.results)
+
+  g = getWilcoxonPlot(obj = obj.agg)
+  
+  ggsave(plot = g, filename = paste0("output/", algo.name, "_wilcoxon.pdf"), dpi = 500, 
+    width = 5, height = 2.4, units = "in")
+  cat("ok\n")
+
+
+  #----------------------
+  #----------------------
+
   ids.order = NULL
 
   if(performance == TRUE) {

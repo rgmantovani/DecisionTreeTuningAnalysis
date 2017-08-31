@@ -9,7 +9,10 @@ info/
 draft/
 output/
 fanovaOutputs/
+tests/
+uploader/
 
 R/metaLearning.R
 
 metaAnalysis.R
+extractStats.R

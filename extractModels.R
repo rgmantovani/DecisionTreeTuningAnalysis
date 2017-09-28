@@ -33,7 +33,8 @@ source("R/extractTrees.R")
 
   reps = list.files(path = paste0("data/", algo, "/results/", dataset, "/", algo, "/", tun))
   aux.rep = lapply(reps, function(rep) {
-    cat("=")
+    cat(rep, "\n")
+    # cat("=")
     return(.getRepResults(algo = algo, dataset = dataset, tun = tun, rep = rep))
   })
   cat("\n")

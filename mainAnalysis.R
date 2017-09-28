@@ -48,10 +48,10 @@ mainAnalysis = function(algo) {
   cat("  - correlation: \tok\n")
   
   # fAnova is external
-  # if(!checkSubdir(algo = algo, subdir = "fanova")) {
-    # stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")
-  # }
-  # cat("  - fanova: \t\tok\n")
+  if(!checkSubdir(algo = algo, subdir = "fanova")) {
+    stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")
+  }
+  cat("  - fanova: \t\tok\n")
   cat("*******************************************\n")
 
 
@@ -67,7 +67,6 @@ mainAnalysis = function(algo) {
     ids         = TRUE, 
     correlation = TRUE,
     fanova      = TRUE
-    # fanova = FALSE
   )
 
   cat("* Done\n")

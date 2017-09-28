@@ -50,10 +50,10 @@ getTuningTimes = function(algo, all.dirs) {
   tuning.list = lapply(time.list, function(elem) {
     ids     = grep("tuningTime", colnames(elem))
     sel     = elem[, ids]
-    medians = apply(sel, 2, sd)
-    mins    = apply(sel, 2, sd)
-    maxs    = apply(sel, 2, sd)
-    sds     = apply(sel, 2, sd)
+    medians = apply(sel, 2, sd, na.rm = TRUE)
+    mins    = apply(sel, 2, sd, na.rm = TRUE)
+    maxs    = apply(sel, 2, sd, na.rm = TRUE)
+    sds     = apply(sel, 2, sd, na.rm = TRUE)
 
     inner.df = data.frame(cbind(medians, mins, maxs, sds))
     inner.df$technique = gsub(x=rownames(inner.df), pattern = ".tuningTime", replacement="")
@@ -66,14 +66,13 @@ getTuningTimes = function(algo, all.dirs) {
   df.tuning$time    = "tuning"
   colnames(df.tuning)[1:4] = c("median", "min", "max", "sd")
 
-
   testing.list = lapply(time.list, function(elem) {
     ids     = grep("testingTime", colnames(elem))
     sel     = elem[, ids]
-    medians = apply(sel, 2, sd)
-    mins    = apply(sel, 2, sd)
-    maxs    = apply(sel, 2, sd)
-    sds     = apply(sel, 2, sd)
+    medians = apply(sel, 2, sd, na.rm = TRUE)
+    mins    = apply(sel, 2, sd, na.rm = TRUE)
+    maxs    = apply(sel, 2, sd, na.rm = TRUE)
+    sds     = apply(sel, 2, sd, na.rm = TRUE)
 
     inner.df = data.frame(cbind(medians, mins, maxs, sds))
     inner.df$technique = gsub(x=rownames(inner.df), pattern = ".testingTime", replacement="")

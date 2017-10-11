@@ -1,13 +1,6 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-#TODO: check to remove these library calls
-library("reshape2")
-library("ggplot2")
-library("checkmate")
-library("mlr")
-library("partykit")
-
 mlr::configureMlr(on.learner.error = "warn")
 mlr::configureMlr(show.info = TRUE)
 

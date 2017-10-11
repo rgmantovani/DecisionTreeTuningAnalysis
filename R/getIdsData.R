@@ -13,7 +13,7 @@ innerAuxTechIds = function(algo, tech, dataset) {
   rep.aux = lapply(rep.dirs, function(rep) {
 
     rep.file = paste0(rep, "/opt_params_", dataset, ".RData")
-    read = try(load(rep.file, verbose = FALSE), silent = TRUE)
+    read = try(suppressWarnings(load(rep.file, verbose = FALSE)), silent = TRUE)
 
     if (inherits(read, "try-error")) { 
       return(data.frame()) 
@@ -37,7 +37,7 @@ getIdsData = function(algo, dataset, ids.dir) {
 
   job = paste0(ids.dir, "/", dataset, ".RData")
   if(file.exists(path = job)) {
-    load(file = job)
+    suppressWarnings(load(file = job))
   } else {
 
     inner.names = c("pso", "ga", "eda", "random", "mbo", "irace")

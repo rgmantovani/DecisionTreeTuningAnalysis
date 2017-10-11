@@ -54,7 +54,6 @@ getParamsDistributionPlots = function(algo) {
 
   aux = lapply(param.files, function(job) {
 
-    # print(job)
     suppressWarnings(load(job)) 
     param.list = lapply(ret.params.list[[1]][[1]], function(res) {
       ret = c(unlist(res$x), res$y)

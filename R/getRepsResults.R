@@ -16,7 +16,9 @@ getRepsResults = function(algo, all.dirs) {
       rep.aux = lapply(rep.dirs, function(rep) {
       
         dataset = gsub(x = data.dir, pattern = paste0("data/|",algo,"|/results/"), replacement = "")
-        read = try(load(paste0(rep, "/perf_", dataset, ".RData"),verbose = FALSE), silent = TRUE)
+        read = try(suppressWarnings(load(paste0(rep, "/perf_", dataset, ".RData"),
+          verbose = FALSE)), silent = TRUE)
+        
         if (inherits(read, "try-error")) {
           return(NA)
         }

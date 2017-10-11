@@ -31,7 +31,7 @@ innerAuxTech = function(algo, tech, dataset) {
   rep.aux = lapply(rep.dirs, function(rep) {
       
     rep.file = paste0(rep, "/opt_params_", dataset, ".RData")
-    read = try(load(rep.file, verbose = FALSE), silent = TRUE)
+    read = try(suppressWarnings(load(rep.file, verbose = FALSE)), silent = TRUE)
 
     if (inherits(read, "try-error")) { 
       return(data.frame()) 
@@ -59,7 +59,7 @@ getCorrData = function(algo, dataset, cor.dir) {
   job = paste0(cor.dir, "/", dataset, ".RData")
   if(file.exists(path = job)){
     # cat(" - Correlations already calculated \n")
-    load(file = job)
+    suppressWarnings(load(file = job))
   } else {
 
     cat("- generating corr for the first time\n")

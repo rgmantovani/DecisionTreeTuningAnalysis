@@ -59,15 +59,7 @@ mainAnalysis = function(algo) {
   #----------------------
 
   # Calling Analysis
-  runAnalysis(
-    algo        = algo, 
-    performance = TRUE, 
-    models      = TRUE, 
-    runtime     = TRUE, 
-    ids         = TRUE, 
-    correlation = TRUE,
-    fanova      = TRUE
-  )
+  runAnalysis(algo = algo)
 
   cat("* Done\n")
   cat("*******************************************\n")

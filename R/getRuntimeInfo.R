@@ -17,7 +17,7 @@ getTrainingTime = function(algo, all.dirs) {
     job.file = paste0(local.dir, data.name, ".RData")
 
     if(file.exists(file = job.file)) {
-      load(file = job.file)
+      suppressWarnings(load(file = job.file))
     } else {
 
       tech.aux = lapply(inner.names, function(tech) {

@@ -1,8 +1,7 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime = TRUE, 
-  ids = TRUE, correlation = TRUE, fanova = TRUE) {
+runAnalysis = function(algo = algo) {
 
   if(!dir.exists(path="output")) {
     dir.create(path="output")
@@ -35,19 +34,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
     sep = "\t", col.names = FALSE, row.names = FALSE)
 
   #----------------------
-  #----------------------
-
-  cat(" * Wilcoxon pair to pair plot ... ")
-  obj.agg = getStatMat(results = av.results)
-
-  g = getWilcoxonPlot(obj = obj.agg)
-  
-  ggsave(plot = g, filename = paste0("output/", algo.name, "_wilcoxon.pdf"), dpi = 500, 
-    width = 5, height = 2.4, units = "in")
-  cat("ok\n")
-
-
-  #----------------------
+  # Average performance plot
   #----------------------
 
   ids.order = NULL
@@ -63,9 +50,9 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   }
 
   #----------------------
+  #  Tree size plot
   #----------------------
   
-  # TODO: Update plots (code works)
   if(models == TRUE) {
     cat(" * Average tree size plot ... ")
     df.info = getModelsInfo(algo = algo)
@@ -77,6 +64,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   }
 
   #----------------------
+  #  Runtime plot
   #----------------------
 
   if(runtime == TRUE) {
@@ -94,6 +82,14 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   }
 
   #----------------------
+  # Params distributions
+  #----------------------
+
+  cat(" * Hyperparameters' distributions (one per hyperparam) ")
+  getParamsDistributionPlots(algo = algo) 
+
+  #----------------------
+  #  Iterations' plot
   #----------------------
 
   if(ids == TRUE) {
@@ -118,6 +114,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   }
 
   #----------------------
+  #  Correlation plots
   #----------------------
 
   if(correlation == TRUE) {
@@ -149,6 +146,7 @@ runAnalysis = function(algo = algo, performance = TRUE, models = TRUE, runtime =
   }
 
   #----------------------
+  # fAnova plots
   #----------------------
  
   if(fanova == TRUE) {

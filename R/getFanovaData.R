@@ -54,6 +54,8 @@ getFanovaData = function(algo) {
   files = list.files(path = fan.dir)
 
   ids = which(gsub(x = files, pattern="ctree_|rpart_|.csv", replacement="") %in% tun.dirs)
+  n.ids =  which(!(tun.dirs %in% gsub(x = files, pattern="ctree_|rpart_|.csv", replacement="")))
+
   inter.files = files[ids]
 
   aux = lapply(inter.files, function(file) {
@@ -66,10 +68,21 @@ getFanovaData = function(algo) {
   datasets = gsub(x = inter.files, pattern = ".csv", replacement = "")
   rownames(df) = datasets
 
-  if(algo == "classif.ctree") {
-    tmp = df[sample(x=1:(nrow(df)), size=(94-nrow(df)), replace = TRUE),]
-    rownames(tmp) =  1:nrow(tmp)
-    df = rbind(df, tmp)
+  # missing jobs due walltime
+  if(length(n.ids) > 0) {
+
+    df = as.data.frame(df)
+    df$row.id = seq(1:94)[-n.ids]
+
+    missing = matrix(0, nrow = length(n.ids), ncol = ncol(df))
+    missing = as.data.frame(missing)
+    colnames(missing) = colnames(df)
+    missing$row.id = n.ids
+    rownames(missing) = tun.dirs[n.ids]
+
+    df = rbind(df, missing)
+    df = df[order(df$row.id),]
+    df$row.id = NULL
   }
 
   return(df)

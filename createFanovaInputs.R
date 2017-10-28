@@ -9,7 +9,7 @@ source("R/config.R")
 
 makeFanovaData = function(algo, dataset) {
 
-  tech.dir = paste0("data/", algo, "/results/", dataset, "/", algo, "/pso")
+  tech.dir = paste0("data/", algo, "/results/", dataset, "/", algo, "/irace")
   reps = list.files(path = tech.dir, full.names = TRUE)[1:3]
 
   inner.aux = lapply(reps, function(rep) {

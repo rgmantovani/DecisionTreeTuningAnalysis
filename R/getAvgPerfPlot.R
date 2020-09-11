@@ -7,15 +7,31 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
   Best = colnames(df)[apply(df, 1, which.max)]
   df = cbind(1:nrow(df), df, Best, df.stats) 
   colnames(df)[1] = "data.id"
+  colnames(df)[ncol(df)] = "Sign"
 
+  mapping = read.csv("data/mapping.csv")
+  mapping$UCI.name = as.character(mapping$UCI.name)
+
+  aux.name = lapply(1:nrow(df), function(i) {
+    id = which(mapping$UCI.name == rownames(df)[i])
+    if(length(id) == 0) {
+      return(c(NA,NA))
+    }
+    return(mapping[id,1:2])
+  })
+
+  maps = cbind(do.call("rbind", aux.name), df) #, df.stats)
+  maps[,3] = NULL
+
+  df = maps
   # order df as DF
   ids.order = order(df$defaults, decreasing = TRUE) 
   df = df[ids.order,]
 
   df[,1] = factor(df[,1], levels = df[,1])
-
+  
   df.aux = df$Sign
-  df.melted = melt(df, id.vars = c(1,9:10)) 
+  df.melted = melt(df, id.vars = c(1,2,10,11)) 
 
   g = ggplot(df.melted, aes(x = data.id, y = value, color = variable, group = variable,
     linetype = variable))
@@ -26,7 +42,7 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
   g = g + theme(legend.position = c(.07,.49), legend.background = element_rect(colour = "black"))
   g = g + theme(legend.title = element_blank(), legend.text = element_text(size = 8))
   g = g + theme(legend.key.height = unit(0.3, "cm"), legend.key.width = unit(0.4, "cm"))
-  g = g + theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1, size = 5))
+  g = g + theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1, size = 6))
 
   if(put.annotations) {
     for(i in 1:nrow(df)) {
@@ -51,4 +67,4 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
 }
 
 #--------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------

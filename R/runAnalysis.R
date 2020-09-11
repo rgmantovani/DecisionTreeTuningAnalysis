@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-runAnalysis = function(algo = alg) {
+runAnalysis = function(algo) {
 
   if(!dir.exists(path="output")) {
     dir.create(path="output")
@@ -32,6 +32,35 @@ runAnalysis = function(algo = alg) {
   # save table to run Friedman stat tests
   write.table(x = av.results, file = paste0("output/avg_", algo.name, ".txt"),  
     sep = "\t", col.names = FALSE, row.names = FALSE)
+
+  #----------------------
+  # Loss time curves 
+  #----------------------
+
+  # loss curve with avg rank
+
+  algo.path.list = getOptPath(algo = algo, all.dirs = all.dirs)
+  algo.path.list = Filter(Negate(is.null), algo.path.list)
+
+  algo.paths = lapply(algo.path.list, avgRankPath)
+  df.algo.paths = Reduce("+", algo.paths)/length(algo.paths)
+
+  # call [plot]
+  g = lossCurvePlot(df = df.algo.paths, measure = "rank") 
+
+  ggsave(g, file = paste0("output/LossCurve_avgRK_", algo, ".pdf"), 
+    width = 6.56, height = 2.89)
+
+  # loss curve with avg loss error
+
+  algo.paths.2 = lapply(algo.path.list, avgLossPath)
+  df.algo.paths.2 = Reduce("+", algo.paths.2)/length(algo.paths.2)
+
+  g2 = lossCurvePlot(df = df.algo.paths.2, measure = "loss") 
+
+  ggsave(g2, file = paste0("output/LossCurve_avgLoss_", algo, ".pdf"), 
+    width = 6.56, height = 2.89)
+
 
   #----------------------
   # Average performance plot
@@ -143,7 +172,11 @@ runAnalysis = function(algo = alg) {
   ggsave(g, filename = paste0("output/", algo.name, "_FAnova.pdf"), 
     dpi = 500, width = 7, height = 2, units = "in")
   cat("ok\n")
- 
+
+  g = getFanovaHpBoxplot(df = df)
+  ggsave(g, filename = paste0("output/", algo.name, "_FAnovaParams.pdf"),
+    dpi = 500, width = 5.28, height = 3.6)
+
 }
 
 #--------------------------------------------------------------------------------------------------

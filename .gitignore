@@ -11,5 +11,8 @@ output/
 fanovaOutputs/
 tests/
 uploader/
+misc/
+old/
 
 extractStats.R
+reducedSpaceResults.R

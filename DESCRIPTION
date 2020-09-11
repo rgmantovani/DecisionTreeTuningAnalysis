@@ -1,10 +1,10 @@
 Package: TuningAnalysis
-Title: Hyper-parameter ''tuning'' automated ''analysis''.
-Version: 0.0.1
+Title: Automated hyperparameter ''tuning analysis''.
+Version: 0.0.2
 Authors@R: person("Rafael", "Gomes Mantovani", email = "rgmantovani@gmail.com", role = c("aut", "cre"))
-Description: 'TuningAnalysis' is an automated code to generate hyper-parameter tuning graphical analysis.
-Depends: R (>= 3.3.2), mlr(>= 2.9), ggplot2, reshape2, checkmate, partykit
-Suggests: rpart, RWeka(>= 0.4)
+Description: 'TuningAnalysis' is an automated code to generate graphical hyperparameter tuning analysis.
+Depends: R (>= 3.3.2), mlr(>= 2.9), ggplot2, reshape2, checkmate, partykit, optparse
+Suggests: rpart, RWeka(>= 0.4), setwidth
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true

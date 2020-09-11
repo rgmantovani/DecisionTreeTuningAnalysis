@@ -47,7 +47,27 @@ getTreeSizePlot = function(df.info, ids.order, measure = "median") {
   })
 
   df.ordered = do.call("rbind", aux)
+  df.ordered[which(df.ordered$dataset == "meta-"), "dataset"] = "meta-data"
+  df.ordered$dataset = gsub(df.ordered$dataset, pattern = "analcat_", replacement = "analcatdata_")
+
+  mapping = read.csv("data/mapping.csv")
+  mapping$UCI.name = as.character(mapping$UCI.name)
+
+  aux.name = lapply(1:nrow(df.ordered), function(i) {
+
+    id = which(mapping$UCI.name == df.ordered[i, "dataset"])
+    if(length(id) == 0) {
+      return(c(NA, NA))
+    }
+    return(mapping[id, 1:2])
+  })
+
+  tmp = cbind(do.call("rbind", aux.name), df.ordered) #, df.stats)
+  tmp[,3:4] = NULL
+
+  df.ordered = tmp
   df.ordered$data.id = factor(as.character(df.ordered$data.id), levels = unique(df.ordered$data.id))
+
 
   LOCAL.LINETYPES = CUSTOM.LINETYPES
   LOCAL.LINETYPES[1] = "dotdash"
@@ -65,7 +85,7 @@ getTreeSizePlot = function(df.info, ids.order, measure = "median") {
   g = g + theme(legend.background = element_rect(colour = "black"))
   g = g + theme(legend.title = element_blank(), legend.text = element_text(size = 8))
   g = g + theme(legend.key.height = unit(0.3, "cm"), legend.key.width = unit(0.4, "cm"))
-  g = g + theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1, size = 5))
+  g = g + theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1, size = 6))
 
   # remove legend
   g = g + theme(legend.position="none")

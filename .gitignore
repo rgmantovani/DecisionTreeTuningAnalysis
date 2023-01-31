@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 *.zip
+.DS_Store
 
 data/
 examples/

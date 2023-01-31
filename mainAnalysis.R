@@ -7,7 +7,7 @@ mainAnalysis = function(parsed.obj) {
   cat("* Automated Hyperparameter tuning Analysis\n")
   cat("*******************************************\n")
 
-  devtools::load_all(pkg = ".")
+  devtools::load_all(path = ".")
 
   algo  = parsed.obj$algo
   space = parsed.obj$space
@@ -18,9 +18,11 @@ mainAnalysis = function(parsed.obj) {
   checkmate::assertChoice(x = algo, choices = AVAILABLE.ALGOS,
     .var.name = "algo")
 
-  n.files = list.files(path = paste0("data/", algo), recursive = TRUE)
+  n.files = list.files(path = paste0("data/",space,"_space/", algo), recursive = TRUE)
   if(length(n.files) == 0) {
     stop(paste0("There is no result for algo: ", algo, "\n"))
+  } else {
+    cat(" * results found ... beginning the analysis ...\n")
   }
 
   cat("*******************************************\n")

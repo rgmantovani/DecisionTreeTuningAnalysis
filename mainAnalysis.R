@@ -15,8 +15,7 @@ mainAnalysis = function(parsed.obj) {
   #----------------------
   #----------------------
 
-  checkmate::assertChoice(x = algo, choices = AVAILABLE.ALGOS,
-    .var.name = "algo")
+  checkmate::assertChoice(x = algo, choices = AVAILABLE.ALGOS, .var.name = "algo")
 
   n.files = list.files(path = paste0("data/",space,"_space/", algo), recursive = TRUE)
   if(length(n.files) == 0) {
@@ -32,11 +31,20 @@ mainAnalysis = function(parsed.obj) {
   #----------------------
   #----------------------
 
-  cat("* Checking required info for analyse: \n")
+  cat("* Checking required data for analyzes: \n")
 
+  # Folder com os resultados brutos em R.data(data/algorithm/space/esults/)
+
+  # TODO: 
+  # para um mesmo algoritmo, tenho que extrair:
+  # * extrair performances (data/algorithm/fullspace/extracted_results)
+  # * extrair optimization path (data/algorithm/fullspace/opt_paths)
+  # * extrair modelos (data/algorithm/fullspace/model_stats)
+  # * extrair ids (convergencia) (data/algorithm/fullspace/convergence)
+  # * extrarir os arquivos necessários para rodar fanova (data/algorithm/fullspace/fanova_input)
 
   # generates convergence ids (iterations with best solutions)
-  if(!checkSubdir(algo = algo, subdir="ids")) {
+  if(!checkSubdir(algo = algo, space = space, subdir="ids")) {
     stop("You did not generate info tuning. Plase, run the \'extractRepResults.R\' script.\n")
   }
   cat("  - performances overall repetitions: \t\tok\n")
@@ -52,12 +60,6 @@ mainAnalysis = function(parsed.obj) {
   #   stop("You did not generate info from models. Plase, run the \'extractModels.R\' script first.\n")
   # }
   # cat("  - models: \t\tok\n")
-  #
-  # # generates correlation bewteen hyperparameters
-  # if(!checkSubdir(algo = algo, subdir = "corr")) {
-  #   stop("You did not generate correlation info from HPs. Plase, run the \'extractCorr.R\' script first.\n")
-  # }
-  # cat("  - correlation: \tok\n")
   #
   # # fAnova is external
   # if(!checkSubdir(algo = algo, subdir = "fanova")) {

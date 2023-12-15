@@ -19,6 +19,7 @@ runAnalysis = function(algo) {
   # all results from 30 repetitions
   all.results = getRepsResults(algo = algo, all.dirs = all.dirs)
 
+  # TODO: check statistical tests here
   # statistical results
   suppressWarnings(df.stats <- getStatsDF(all.results = all.results))
 
@@ -160,7 +161,6 @@ runAnalysis = function(algo) {
 
   #----------------------
   #----------------------
-
 
 }
 

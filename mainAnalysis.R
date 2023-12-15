@@ -17,7 +17,7 @@ mainAnalysis = function(parsed.obj) {
 
   checkmate::assertChoice(x = algo, choices = AVAILABLE.ALGOS, .var.name = "algo")
 
-  n.files = list.files(path = paste0("data/hptuning_",space,"_space/", algo, "results/"), recursive = TRUE)
+  n.files = list.files(path = paste0("data/hptuning_",space,"_space/", algo, "/results/"), recursive = TRUE)
   if(length(n.files) == 0) {
     stop(paste0("There is no result for algo: ", algo, "\n"))
   } else {
@@ -42,13 +42,11 @@ mainAnalysis = function(parsed.obj) {
   
 
   # ----------------------------
+  # * 01: extract all performances 
   # ----------------------------
   
-  # * 01: extract all performances (data/algorithm/fullspace/extracted_results)
   if(!checkSubdir(algo = algo, space = space, subdir="extracted_results")) {
-    stop("You did not generate info tuning. Plase, run the \'extractRepResults.R\' script.\n")
-    # cd scripts
-    # Rscripts 01_extractRepResults.R --algo="classif.J48" --space="full"
+    stop("Plase, run the script: \'01_extractRepResults.R\'\n")
   } else {
     cat("  - all performances overall repetitions already extracted: \t\tok\n")
   }
@@ -56,34 +54,33 @@ mainAnalysis = function(parsed.obj) {
   # ----------------------------
   # ----------------------------
   
-  # * 02: extract all optimization paths (data/algorithm/fullspace/opt_paths)
-  # * 03: extract models' statistics (data/algorithm/fullspace/model_stats)
-  # * 04: extract convergence ids (convergencia) (data/algorithm/fullspace/convergence)
-  # * 05: extract fanova files (data/algorithm/fullspace/fanova_input)
-  
+  # * 02: extract all optimization paths
+  if(!checkSubdir(algo = algo, space = space, subdir="opt_paths")) {
+    stop("Plase, run the script: \'02_extractOptPaths.R\'\n")
+  } else {
+    cat("  - all optimization paths were already extracted: \t\tok\n")
+  }
+
   # ----------------------------
   # ----------------------------
-  
 
-  # # generates convergence ids (iterations with best solutions)
-  # if(!checkSubdir(algo = algo, subdir="ids")) {
-  #   stop("You did not generate info tuning. Plase, run the \'extractIds.R\' script first.\n")
-  # }
-  # cat("  - ids: \t\tok\n")
-  #
-  # # generates model interpretability measures
-  # if(!checkSubdir(algo = algo, subdir="models")) {
-  #   stop("You did not generate info from models. Plase, run the \'extractModels.R\' script first.\n")
-  # }
-  # cat("  - models: \t\tok\n")
-  #
-  # # fAnova is external
-  # if(!checkSubdir(algo = algo, subdir = "fanova")) {
-  #   stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")
-  # }
-  # cat("  - fanova: \t\tok\n")
-  # cat("*******************************************\n")
+  # * 03: extract models' statistics
+  if(!checkSubdir(algo = algo, space = space, subdir="models_stats")) {
+    stop("Plase, run the script: \'03_extractModelsStats.R\'\n")
+  } else {
+    cat("  - all optimization paths were already extracted: \t\tok\n")
+  }
 
+  # ----------------------------
+  # ----------------------------
+
+  # * 04: extract fanova files (data/algorithm/fullspace/fanova_input)
+  # fAnova is external
+  if(!checkSubdir(algo = algo, subdir = "fanova_output")) {
+    stop("You did not generate fAnova info from HPs. Plase, generate them first.\n")
+  } else {
+    cat("  - all fanova results were already extracted: \t\tok\n")
+  }
 
   #----------------------
   #----------------------

@@ -118,7 +118,7 @@ getParamsDistributionPlots = function(algo) {
         g = g + geom_density(aes(fill=variable))
       }
       g = g + geom_vline(xintercept = .getDefaultValue(name = name), linetype="dashed", color = "black")
-      g = g + guides(fill=FALSE) 
+      g = g + guides(fill="none") 
       g = g + theme_bw()
 
       # -----------------

@@ -133,7 +133,7 @@ runAnalysis = function(algo) {
   #----------------------
   #----------------------
 
-  cat(" * Hyperparameters' distributions (one per hyperparameter) ")
+  cat("@ Plotting: Hyperparameters distributions (one per hyperparameter) \n")
   getParamsDistributionPlots(algo = algo)
 
   #----------------------

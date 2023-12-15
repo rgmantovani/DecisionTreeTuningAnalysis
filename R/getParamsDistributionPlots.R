@@ -38,13 +38,20 @@
 
 getParamsDistributionPlots = function(algo) {
 
-  dir.create(path = "output/params/", recursive = TRUE, showWarnings = FALSE)
+  dir.create(path = "plots/params/", recursive = TRUE, showWarnings = FALSE)
  
   algo.name = gsub(x = algo, pattern="classif.", replacement = "")
-  algo.path = paste("data", algo, "results", sep="/")
+  algo.path = paste("data/hptuning_full_space/", algo, "results", sep="/")
   
+  # ----------------------------
+  # Listing all optmization paths
+  # ----------------------------
   param.files = list.files(path = algo.path, full.names = TRUE, 
     recursive = TRUE, pattern = "opt_params")
+  
+  # ----------------------------
+  # Subsecting for one repetition and irace
+  # ----------------------------
   
   random.ids = grep(x = param.files, pattern="irace")
   param.files = param.files[random.ids]
@@ -52,6 +59,9 @@ getParamsDistributionPlots = function(algo) {
   rep.ids = grep(x = param.files, pattern="rep1")
   param.files = param.files[rep.ids]
 
+  # ----------------------------
+  # ----------------------------
+  
   aux = lapply(param.files, function(job) {
 
     suppressWarnings(load(job)) 
@@ -93,6 +103,9 @@ getParamsDistributionPlots = function(algo) {
     all.df$surrogatestyle = as.factor(all.df$surrogatestyle)
   }
 
+  # -----------------
+  # For all the HPs in the hyperspace
+  # -----------------
   for(name in colnames(all.df)) {
     if(name != "Accuracy") {
       print(name)
@@ -107,11 +120,19 @@ getParamsDistributionPlots = function(algo) {
       g = g + geom_vline(xintercept = .getDefaultValue(name = name), linetype="dashed", color = "black")
       g = g + guides(fill=FALSE) 
       g = g + theme_bw()
-      ggsave(g, file = paste0("output/params/", algo.name, "_", name, "_param.pdf"), 
-        width = 4.13, height = 2.95, dpi = 500)
+
+      # -----------------
+      # exporting files
+      # -----------------
+      
+      ggsave(g, file = paste0("plots/params/", algo.name, "_", name, "_param.pdf"),  width = 4.13, height = 2.95, dpi = 500)
+      ggsave(g, file = paste0("plots/params/", algo.name, "_", name, "_param.jpeg"), width = 4.13, height = 2.95, dpi = 500)
+      ggsave(g, file = paste0("plots/params/", algo.name, "_", name, "_param.eps"),  width = 4.13, height = 2.95, dpi = 500)
+    
+      # -----------------
+      
     }
   }
-
 }
 
 #--------------------------------------------------------------------------------------------------

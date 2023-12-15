@@ -68,6 +68,11 @@ runAnalysis = function(algo) {
   #----------------------
   #----------------------
   
+  df.perf = melt(av.results, id.vars = 1)
+  g = getAvgPerfScatterPlot(df.perf = df.perf)
+  ggsave(g, file = paste0("plots/", algo.name, "_scatterPlot.pdf"),  width = 4.2, height = 3.01, dpi = 500)
+  ggsave(g, file = paste0("plots/", algo.name, "_scatterPlot.jpeg"), width = 4.2, height = 3.01, dpi = 500)
+  ggsave(g, file = paste0("plots/", algo.name, "_scatterPlot.eps"),  width = 4.2, height = 3.01, dpi = 500)
 
   #----------------------
   #----------------------

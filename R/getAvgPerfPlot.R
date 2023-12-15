@@ -73,7 +73,7 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
     }
   }
   g = g + scale_shape_manual(values = c("df"=25, "tun"=24)) 
-  g = g + guides(shape="none", fill = "none")
+  g = g + guides(shape="none", fill="none")
 
   # -------------------------
   # returning plots

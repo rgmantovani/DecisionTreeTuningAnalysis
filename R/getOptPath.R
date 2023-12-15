@@ -34,28 +34,35 @@ optPathAux = function(opt.path) {
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-ExtractPathsDf = function()
-
-#--------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------
-
 getOptPath = function(algo, all.dirs) {
 
+  # iterating all directories (datasets' results)
   aux = lapply(all.dirs, function(data.dir) {
 
-    dataset = gsub(x = data.dir, pattern = paste0("data/|",algo,"|/results/"), replacement = "")
-    dir.create(paste0("data/cache/", algo, "/"), recursive = TRUE, showWarning = FALSE)
-    outfile = paste0("data/cache/", algo, "/path_", dataset, ".RData")
+    # ---------------------------------
+    # Dataset name 
+    # ---------------------------------
+        
+    dataset = gsub(x = data.dir, 
+      pattern = paste0("../data/hptuning_full_space/|data/hptuning_full_space/|",algo,"|/results/"), 
+      replacement = "")
+    # print(dataset)
 
+    opt.path.dir = gsub(x = data.dir, pattern = paste0("/results/", dataset), replacement = "")
+    opt.path.dir = paste0(opt.path.dir, "/opt_paths/")
+    outfile = paste0(opt.path.dir, "/path_", dataset, ".RData")
+    print(outfile)
+
+    # ---------------------------------
+    # ---------------------------------
+        
     if(file.exists(outfile)) {
-
+      # cat("path already extracted!\n")
       load(outfile) #df.path
       df.path
-
     } else {
 
-      # print(dataset)
-
+      print(dataset)
       tech.aux = lapply(INNER.NAMES, function(tech) {
 
         print(tech)
@@ -86,6 +93,9 @@ getOptPath = function(algo, all.dirs) {
           return(res.df)
         })
 
+        # ---------------------------------
+        # ---------------------------------
+        
         rep.aux = lapply(rep.aux, function(elem) {
           aux = na.omit(elem)
           if(nrow(aux) != 900) {
@@ -96,6 +106,9 @@ getOptPath = function(algo, all.dirs) {
         })
         rep.aux = Filter(Negate(is.null), rep.aux)
 
+        # ---------------------------------
+        # ---------------------------------
+        
         tmp = do.call("cbind",lapply(rep.aux, function(rep) {rep[,2]}))
         if(is.null(tmp)) {
           ret = data.frame(cbind(1:900, NA))
@@ -106,6 +119,10 @@ getOptPath = function(algo, all.dirs) {
 
         return(ret)
       })
+
+      # ---------------------------------
+      #  merging paths from different techniques
+      # ---------------------------------  
 
       df.path =  Reduce(function(...) merge(..., all=T), tech.aux)
       save(df.path, file = outfile)

@@ -20,14 +20,16 @@ extractOptPaths = function(parsed.obj) {
   algo.name = gsub(x = algo, pattern="classif.", replacement = "")
 
   # perf.dir = where to output
-  opt.path.dir = paste0("../data/", space, "_space/", algo, "/opt_paths")
+  opt.path.dir = paste0("../data/hptuning_", space, "_space/", algo, "/opt_paths")
   dir.create(path = opt.path.dir, recursive = TRUE, showWarnings = FALSE)
 
   # input.dir = where to check results
-  input.dir = paste0("../data/", space, "_space/", algo, "/results")
+  input.dir = paste0("../data/hptuning_", space, "_space/", algo, "/results")
   if(!dir.exists(path = input.dir)) {
     stop("Sorry, but there is no file with results to extract. Please, add them first.\n")
   }
+
+  # TODO ... check dirs
 
   # getting results from all repetitions
   cat("- Loading results: \n")

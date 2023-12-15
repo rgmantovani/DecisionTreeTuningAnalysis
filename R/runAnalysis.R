@@ -49,7 +49,8 @@ runAnalysis = function(algo) {
 
   ids.order = NULL
 
-  cat(" * Average performance plot ... ")
+  cat("@ Plotting: Average performance plot")
+
   obj = getAvgPerfPlot(av.results = av.results, df.stats = df.stats, put.annotations = TRUE)
   ids.order = obj$ids.order
 
@@ -67,6 +68,8 @@ runAnalysis = function(algo) {
   # Scatter plot: default x tuned performances
   #----------------------
   #----------------------
+
+  cat("@ Plotting: Scatter plot (default vs optimized) ")
   
   df.perf = melt(av.results, id.vars = 1)
   g = getAvgPerfScatterPlot(df.perf = df.perf)
@@ -74,11 +77,14 @@ runAnalysis = function(algo) {
   ggsave(g, file = paste0("plots/", algo.name, "_scatterPlot.jpeg"), width = 4.2, height = 3.01, dpi = 500)
   ggsave(g, file = paste0("plots/", algo.name, "_scatterPlot.eps"),  width = 4.2, height = 3.01, dpi = 500)
 
+
   #----------------------
   #----------------------
   # Loss time curves
   #----------------------
   #----------------------
+
+  cat("@ Plotting: Loss curves [Avg Rank | Avg Loss]")
 
   # loss curve with avg rank
   algo.path.list = getOptPath(algo = algo, all.dirs = all.dirs)
@@ -90,17 +96,20 @@ runAnalysis = function(algo) {
   # call [plot]
   g = lossCurvePlot(df = df.algo.paths, measure = "rank")
 
-  ggsave(g, file = paste0("output/LossCurve_avgRK_", algo, ".pdf"),
-    width = 6.56, height = 2.89)
+  ggsave(g, file = paste0("plots/", algo.name, "_LossCurve_avgRK.pdf"),  width = 6.56, height = 2.89, dpi = 500)
+  ggsave(g, file = paste0("plots/", algo.name, "_LossCurve_avgRK.jpeg"), width = 6.56, height = 2.89, dpi = 500)
+  ggsave(g, file = paste0("plots/", algo.name, "_LossCurve_avgRK.eps"),  width = 6.56, height = 2.89, dpi = 500)
 
   # loss curve with avg loss error
   algo.paths.2 = lapply(algo.path.list, avgLossPath)
   df.algo.paths.2 = Reduce("+", algo.paths.2)/length(algo.paths.2)
 
+  # call [plot]
   g2 = lossCurvePlot(df = df.algo.paths.2, measure = "loss")
 
-  ggsave(g2, file = paste0("output/LossCurve_avgLoss_", algo, ".pdf"),
-    width = 6.56, height = 2.89)
+  ggsave(g2, file = paste0("plots/", algo.name, "_LossCurve_avgLoss.pdf"),  width = 6.56, height = 2.89, dpi = 500)
+  ggsave(g2, file = paste0("plots/", algo.name, "_LossCurve_avgLoss.jpeg"), width = 6.56, height = 2.89, dpi = 500)
+  ggsave(g2, file = paste0("plots/", algo.name, "_LossCurve_avgLoss.eps"),  width = 6.56, height = 2.89, dpi = 500)
 
   #----------------------
   #----------------------

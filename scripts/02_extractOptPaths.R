@@ -29,8 +29,6 @@ extractOptPaths = function(parsed.obj) {
     stop("Sorry, but there is no file with results to extract. Please, add them first.\n")
   }
 
-  # TODO ... check dirs
-
   # getting results from all repetitions
   cat("- Loading results: \n")
   all.dirs    = list.files(path = input.dir, full.names = TRUE)

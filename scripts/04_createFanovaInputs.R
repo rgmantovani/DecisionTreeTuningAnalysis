@@ -7,9 +7,9 @@ source("../R/config.R")
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-makeFanovaData = function(algo, dataset) {
+generateFanovaData = function(algo, dataset) {
 
-  tech.dir = paste0("data/", algo, "/results/", dataset, "/", algo, "/irace")
+  tech.dir = paste0("../data/hptuning_full_space/", algo, "/results/", dataset, "/", algo, "/irace")
   reps = list.files(path = tech.dir, full.names = TRUE)[1:3]
 
   inner.aux = lapply(reps, function(rep) {
@@ -53,22 +53,21 @@ createFanovaInputs = function(algo) {
   checkmate::assertChoice(x=algo, choices=AVAILABLE.ALGOS, .var.name="algo") 
   algo.name = gsub(x = algo, pattern="classif.", replacement = "")
 
-  input.dir = paste("data", algo, "input_fanova", sep="/")
+  input.dir = paste("../data/hptuning_full_space", algo, "fanova_input", sep="/")
   if(!dir.exists(path = input.dir)) {
     dir.create(path = input.dir)
   }
 
-  files = list.files(path = paste("data", algo, "results", sep="/"))
+  files = list.files(path = paste("../data/hptuning_full_space", algo, "results", sep="/"))
   aux = lapply(files, function(dataset) {
     print(dataset)
-    comp.trace = makeFanovaData(algo = algo, dataset = dataset)
-
-    if(algo  == "classif.J48") {
-      output.file = paste0(input.dir, "/", dataset, ".csv")
+    comp.trace = generateFanovaData(algo = algo, dataset = dataset)
+    output.file = paste0(input.dir, "/", dataset, ".csv")
+    if(!file.exists(output.file)) {
+      write.table(x = comp.trace, file = output.file, sep=",", row.names = FALSE)
     } else {
-      output.file = paste0(input.dir, "/", algo.name, "_", dataset, ".csv")
+      cat("file already exists!\n")
     }
-    write.table(x = comp.trace, file = output.file, sep=",", row.names = FALSE)
   })
 
   cat("\n Done ... \n")

@@ -48,10 +48,10 @@ renameVector = function(df, algo) {
 
 getFanovaData = function(algo) {
 
-  tun.dirs = list.files(path = paste0("data/", algo, "/results/"))
+  tun.dirs = list.files(path = paste0("data/hptuning_full_space/", algo, "/results/"))
 
-  fan.dir  = paste("data", algo, "fanova", sep="/")
-  files = list.files(path = fan.dir)
+  fanova.output.dir  = paste("data/hptuning_full_space", algo, "fanova_output", sep="/")
+  files = list.files(path = fanova.output.dir)
 
   ids = which(gsub(x = files, pattern="ctree_|rpart_|.csv", replacement="") %in% tun.dirs)
   n.ids =  which(!(tun.dirs %in% gsub(x = files, pattern="ctree_|rpart_|.csv", replacement="")))
@@ -59,7 +59,7 @@ getFanovaData = function(algo) {
   inter.files = files[ids]
 
   aux = lapply(inter.files, function(file) {
-    df = read.csv(file = paste0(fan.dir, "/", file), header = FALSE)
+    df = read.csv(file = paste0(fanova.output.dir, "/", file), header = FALSE)
     df2 = renameVector(df = df, algo = algo)
     return(df2)
   })

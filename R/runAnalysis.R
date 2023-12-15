@@ -142,17 +142,20 @@ runAnalysis = function(algo) {
   #----------------------
   #----------------------
 
-  cat(" - Fanova plot ...")
-  df = getFanovaData(algo = algo)
+  cat("@ Plotting: FANOVA plot \n")
+
+  df.fanova = getFanovaData(algo = algo)
 
   #  Filtering HPs that do not contribute at least with 0.5% of the performance
-  g = getFanovaPlot(df = df, algo.name = algo.name, threshold = 0.005)
-  ggsave(g, filename = paste0("output/", algo.name, "_FAnova.pdf"),
-    dpi = 500, width = 7, height = 2, units = "in")
-  cat("ok\n")
+  g = getFanovaPlot(df = df.fanova, algo.name = algo.name, threshold = 0.005)
 
-  g = getFanovaHpBoxplot(df = df)
-  ggsave(g, filename = paste0("output/", algo.name, "_FAnovaParams.pdf"),
+  ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaHeatmap.pdf"),  dpi = 500, width = 7, height = 2, units = "in")
+  ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaHeatmap.jpeg"), dpi = 500, width = 7, height = 2, units = "in")
+  ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaHeatmap.eps"),  dpi = 500, width = 7, height = 2, units = "in")
+  
+
+  g = getFanovaHpBoxplot(df = df.fanova)
+  ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaParams.pdf"),
     dpi = 500, width = 5.28, height = 3.6)
 
 }

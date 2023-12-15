@@ -9,6 +9,10 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
   colnames(df)[1] = "data.id"
   colnames(df)[ncol(df)] = "Sign"
 
+  # -------------------------
+  # renaming datasets using OpenML ids
+  # -------------------------
+  
   mapping = read.csv("data/mapping.csv")
   mapping$UCI.name = as.character(mapping$UCI.name)
 
@@ -23,13 +27,18 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
   maps = cbind(do.call("rbind", aux.name), df) #, df.stats)
   maps[,3] = NULL
 
+  # -------------------------
+  # -------------------------
+
   df = maps
-  # order df as DF
+  # ordering df according to the defaults' perofrmance values
   ids.order = order(df$defaults, decreasing = TRUE) 
   df = df[ids.order,]
-
   df[,1] = factor(df[,1], levels = df[,1])
-  
+
+  # -------------------------
+  # -------------------------
+    
   df.aux = df$Sign
   df.melted = melt(df, id.vars = c(1,2,10,11)) 
 
@@ -44,6 +53,10 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
   g = g + theme(legend.key.height = unit(0.3, "cm"), legend.key.width = unit(0.4, "cm"))
   g = g + theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1, size = 6))
 
+  # -------------------------
+  # Adding annotations with statistical tests' results 
+  # -------------------------
+  
   if(put.annotations) {
     for(i in 1:nrow(df)) {
       g = g + annotate("text", x = i, y=0.05, label = df[i, "Best"], size = 1.8, angle = 90, 
@@ -60,8 +73,12 @@ getAvgPerfPlot = function(av.results, df.stats, put.annotations = TRUE) {
     }
   }
   g = g + scale_shape_manual(values = c("df"=25, "tun"=24)) 
-  g = g + guides(shape=FALSE) +  guides(fill = FALSE)
+  g = g + guides(shape="none", fill = "none")
 
+  # -------------------------
+  # returning plots
+  # -------------------------
+  
   obj = list(g = g, ids.order = ids.order)
   return(obj)
 }

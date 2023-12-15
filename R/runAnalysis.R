@@ -13,28 +13,66 @@ runAnalysis = function(algo) {
   cat(" * Loading required data \n")
 
   algo.name = gsub(x = algo, pattern="classif.", replacement = "")
-  algo.path = paste("data", algo, "results", sep="/")
+  algo.path = paste("data/hptuning_full_space", algo, "results", sep="/")
   all.dirs  = list.files(path = algo.path, full.names = TRUE)
 
   # all results from 30 repetitions
   all.results = getRepsResults(algo = algo, all.dirs = all.dirs)
 
   # statistical results
-  df.stats = getStatsDf(all.results = all.results)
+  suppressWarnings(df.stats <- getStatsDF(all.results = all.results))
 
   # average results
-  av.results = data.frame(do.call("rbind", lapply(all.results, colMeans, TRUE)))
+  aux.avg = lapply(all.results, function(res) {
+    tmp = colMeans(res[, -ncol(res)])
+    return(tmp)
+  })
+  av.results = data.frame(do.call("rbind", aux.avg))
 
   # list with datasets names
-  datasets = gsub(x = all.dirs, pattern = paste0("data/|", algo, "/results/"), replacement = "")
+  datasets = gsub(x = all.dirs, pattern = paste0("data/hptuning_full_space/|", algo, "/results/"), 
+    replacement = "")
   rownames(av.results) = datasets
 
-  # save table to run Friedman stat tests
-  write.table(x = av.results, file = paste0("output/avg_", algo.name, ".txt"),
+  #----------------------
+  # save results to run Friedman statistical tests
+  #----------------------
+  write.table(x = av.results, file = paste0("plots/", algo.name, "_averagePerformance.txt"),
     sep = "\t", col.names = FALSE, row.names = FALSE)
+  write.csv(x = av.results, file = paste0("plots/", algo.name, "_averagePerformance.csv"))
 
   #----------------------
+  #----------------------
+  # Average performance plot
+  #----------------------
+  #----------------------
+
+  ids.order = NULL
+
+  cat(" * Average performance plot ... ")
+  obj = getAvgPerfPlot(av.results = av.results, df.stats = df.stats, put.annotations = TRUE)
+  ids.order = obj$ids.order
+
+  ggsave(obj$g, file = paste0("plots/", algo.name,"_AvgPerf.pdf"), dpi = 500,
+    width = 7.5, height = 2.6, units = "in")
+  ggsave(obj$g, file = paste0("plots/", algo.name,"_AvgPerf.jpeg"), dpi = 500,
+    width = 7.5, height = 2.6, units = "in")
+  ggsave(obj$g, file = paste0("plots/", algo.name,"_AvgPerf.eps"), dpi = 500,
+    width = 7.5, height = 2.6, units = "in")
+  
+  cat("ok\n")
+
+  #----------------------
+  #----------------------
+  # Scatter plot: default x tuned performances
+  #----------------------
+  #----------------------
+  
+
+  #----------------------
+  #----------------------
   # Loss time curves
+  #----------------------
   #----------------------
 
   # loss curve with avg rank
@@ -51,7 +89,6 @@ runAnalysis = function(algo) {
     width = 6.56, height = 2.89)
 
   # loss curve with avg loss error
-
   algo.paths.2 = lapply(algo.path.list, avgLossPath)
   df.algo.paths.2 = Reduce("+", algo.paths.2)/length(algo.paths.2)
 
@@ -60,23 +97,10 @@ runAnalysis = function(algo) {
   ggsave(g2, file = paste0("output/LossCurve_avgLoss_", algo, ".pdf"),
     width = 6.56, height = 2.89)
 
-
   #----------------------
-  # Average performance plot
-  #----------------------
-
-  ids.order = NULL
-
-  cat(" * Average performance plot ... ")
-  obj = getAvgPerfPlot(av.results = av.results, df.stats = df.stats, put.annotations = TRUE)
-  ids.order = obj$ids.order
-
-  ggsave(obj$g, file = paste0("output/", algo.name,"_AvgPerf.pdf"), dpi = 500,
-    width = 7.5, height = 2.6, units = "in")
-  cat("ok\n")
-
   #----------------------
   #  Tree size plot
+  #----------------------
   #----------------------
 
   cat(" * Average tree size plot ... ")
@@ -88,7 +112,9 @@ runAnalysis = function(algo) {
   cat("ok\n")
 
   #----------------------
+  #----------------------
   #  Runtime plot
+  #----------------------
   #----------------------
 
   cat(" * Runtime plot ... ")
@@ -103,14 +129,18 @@ runAnalysis = function(algo) {
   cat("ok\n")
 
   #----------------------
+  #----------------------
   # Params distributions
+  #----------------------
   #----------------------
 
   cat(" * Hyperparameters' distributions (one per hyperparameter) ")
   getParamsDistributionPlots(algo = algo)
 
   #----------------------
+  #----------------------
   #  Iterations' plot
+  #----------------------
   #----------------------
 
   cat(" * Iterations Plot ... ")
@@ -132,7 +162,9 @@ runAnalysis = function(algo) {
   cat("ok\n")
 
   #----------------------
+  #----------------------
   #  Correlation plots
+  #----------------------
   #----------------------
 
   cor.dir = paste("data", algo, "corr", sep="/")
@@ -160,7 +192,9 @@ runAnalysis = function(algo) {
   cat("ok\n")
 
   #----------------------
+  #----------------------
   # fAnova plots
+  #----------------------
   #----------------------
 
   cat(" - Fanova plot ...")

@@ -12,9 +12,6 @@ mainAnalysis = function(parsed.obj) {
   algo  = parsed.obj$algo
   space = parsed.obj$space
 
-  # algo = "classif.J48"
-  # space = "full"
-
   #----------------------
   #----------------------
 
@@ -36,22 +33,38 @@ mainAnalysis = function(parsed.obj) {
 
   cat("* Checking required data for analyzes: \n")
 
+  # ----------------------------
+  # ----------------------------
   # Raw results in: data/hptuning_full_space/{algo} /results
   # For an {algo}, we must extract from raw data:
+  # ----------------------------
+  # ----------------------------
   
-  # * 01: extrair performances (data/algorithm/fullspace/extracted_results)
-  # * 02: extrair optimization path (data/algorithm/fullspace/opt_paths)
-  # * 03: extrair modelos (data/algorithm/fullspace/model_stats)
-  # * 04: extrair ids (convergencia) (data/algorithm/fullspace/convergence)
-  # * 05: extrarir os arquivos necessários para rodar fanova (data/algorithm/fullspace/fanova_input)
 
-  # generates convergence ids (iterations with best solutions)
+  # ----------------------------
+  # ----------------------------
+  
+  # * 01: extract all performances (data/algorithm/fullspace/extracted_results)
   if(!checkSubdir(algo = algo, space = space, subdir="extracted_results")) {
     stop("You did not generate info tuning. Plase, run the \'extractRepResults.R\' script.\n")
+    # cd scripts
+    # Rscripts 01_extractRepResults.R --algo="classif.J48" --space="full"
   } else {
     cat("  - all performances overall repetitions already extracted: \t\tok\n")
   }
   
+  # ----------------------------
+  # ----------------------------
+  
+  # * 02: extract all optimization paths (data/algorithm/fullspace/opt_paths)
+  # * 03: extract models' statistics (data/algorithm/fullspace/model_stats)
+  # * 04: extract convergence ids (convergencia) (data/algorithm/fullspace/convergence)
+  # * 05: extract fanova files (data/algorithm/fullspace/fanova_input)
+  
+  # ----------------------------
+  # ----------------------------
+  
+
   # # generates convergence ids (iterations with best solutions)
   # if(!checkSubdir(algo = algo, subdir="ids")) {
   #   stop("You did not generate info tuning. Plase, run the \'extractIds.R\' script first.\n")

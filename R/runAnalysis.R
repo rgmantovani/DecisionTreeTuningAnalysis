@@ -153,10 +153,14 @@ runAnalysis = function(algo) {
   ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaHeatmap.jpeg"), dpi = 500, width = 7, height = 2, units = "in")
   ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaHeatmap.eps"),  dpi = 500, width = 7, height = 2, units = "in")
   
+  #----------------------
+  #----------------------
+  
+  cat(" **** Finished !!! \n")
 
-  g = getFanovaHpBoxplot(df = df.fanova)
-  ggsave(g, filename = paste0("plots/", algo.name, "_FAnovaParams.pdf"),
-    dpi = 500, width = 5.28, height = 3.6)
+  #----------------------
+  #----------------------
+
 
 }
 

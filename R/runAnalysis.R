@@ -3,8 +3,8 @@
 
 runAnalysis = function(algo) {
 
-  if(!dir.exists(path="output")) {
-    dir.create(path="output")
+  if(!dir.exists(path = "plots")) {
+    dir.create(path = "plots")
   }
 
   #----------------------

@@ -19,12 +19,13 @@ extractRepResults = function(parsed.obj) {
   checkmate::assertChoice(x = algo, choices = AVAILABLE.ALGOS, .var.name = "algo")
   algo.name = gsub(x = algo, pattern="classif.", replacement = "")
 
-  # perf.dir = where to output
-  perf.dir = paste0("../data/", space, "_space/", algo, "/perf_results")
+  # perf.dir = where to save
+  # perf.dir = paste0("../data/hptuning_", space, "_space/", algo, "/extracted_results")
+  perf.dir = paste0("../data/hptuning_", space, "_space/", algo, "/perf_results")
   dir.create(path = perf.dir, recursive = TRUE, showWarnings = FALSE)
 
   # input.dir = where to check results
-  input.dir = paste0("../data/", space, "_space/", algo, "/results")
+  input.dir = paste0("../data/hptuning_", space, "_space/", algo, "/results")
   if(!dir.exists(path = input.dir)) {
     stop("Sorry, but there is no file with results to extract. Please, add them first.\n")
   }

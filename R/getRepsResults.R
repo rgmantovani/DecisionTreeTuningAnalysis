@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-extractPerformancesDf = function(data.dir, algo, dataset) {
+extractPerformancesIntoDF = function(data.dir, algo, dataset) {
 
   tech.aux = lapply(INNER.NAMES, function(tech) {
     tech.dir = paste0(data.dir, "/", algo, "/", tech)
@@ -38,18 +38,18 @@ getRepsResults = function(algo, all.dirs) {
 
   aux = lapply(all.dirs, function(data.dir) {
 
-    pattern = paste0("../data/full_space/|../data/reduced_space/|",algo,"|/results/")
+    pattern = paste0("../data/hptuning_full_space/|../data/hptuning_reduced_space/|",algo,"|/results/")
     dataset = gsub(x = data.dir, pattern = pattern, replacement = "")
     cat("Dataset: ", dataset, "\n")
 
     # ----------------
-    # export file - thus, if a new dataset is inserted, we dont need to extract again
+    # exported file - if a new dataset is inserted, we dont need to extract its results again
     exported.file = gsub(x = data.dir, pattern = "results", replacement = "extracted_results")
     exported.file = paste0(exported.file, ".RData")
 
     if(!file.exists(exported.file)) {
       cat("\t - exported for the first time.\n")
-      df = extractPerformancesDf(data.dir = data.dir, algo = algo, dataset = dataset)
+      df = extractPerformancesIntoDF(data.dir = data.dir, algo = algo, dataset = dataset)
       save(df, file = exported.file)
     } else {
       cat("\t - loading existing file.\n")

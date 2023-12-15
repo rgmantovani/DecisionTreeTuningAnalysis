@@ -12,12 +12,15 @@ mainAnalysis = function(parsed.obj) {
   algo  = parsed.obj$algo
   space = parsed.obj$space
 
+  # algo = "classif.J48"
+  # space = "full"
+
   #----------------------
   #----------------------
 
   checkmate::assertChoice(x = algo, choices = AVAILABLE.ALGOS, .var.name = "algo")
 
-  n.files = list.files(path = paste0("data/",space,"_space/", algo), recursive = TRUE)
+  n.files = list.files(path = paste0("data/hptuning_",space,"_space/", algo, "results/"), recursive = TRUE)
   if(length(n.files) == 0) {
     stop(paste0("There is no result for algo: ", algo, "\n"))
   } else {
@@ -33,22 +36,22 @@ mainAnalysis = function(parsed.obj) {
 
   cat("* Checking required data for analyzes: \n")
 
-  # Folder com os resultados brutos em R.data(data/algorithm/space/esults/)
-
-  # TODO: 
-  # para um mesmo algoritmo, tenho que extrair:
-  # * extrair performances (data/algorithm/fullspace/extracted_results)
-  # * extrair optimization path (data/algorithm/fullspace/opt_paths)
-  # * extrair modelos (data/algorithm/fullspace/model_stats)
-  # * extrair ids (convergencia) (data/algorithm/fullspace/convergence)
-  # * extrarir os arquivos necessários para rodar fanova (data/algorithm/fullspace/fanova_input)
+  # Raw results in: data/hptuning_full_space/{algo} /results
+  # For an {algo}, we must extract from raw data:
+  
+  # * 01: extrair performances (data/algorithm/fullspace/extracted_results)
+  # * 02: extrair optimization path (data/algorithm/fullspace/opt_paths)
+  # * 03: extrair modelos (data/algorithm/fullspace/model_stats)
+  # * 04: extrair ids (convergencia) (data/algorithm/fullspace/convergence)
+  # * 05: extrarir os arquivos necessários para rodar fanova (data/algorithm/fullspace/fanova_input)
 
   # generates convergence ids (iterations with best solutions)
-  if(!checkSubdir(algo = algo, space = space, subdir="ids")) {
+  if(!checkSubdir(algo = algo, space = space, subdir="extracted_results")) {
     stop("You did not generate info tuning. Plase, run the \'extractRepResults.R\' script.\n")
+  } else {
+    cat("  - all performances overall repetitions already extracted: \t\tok\n")
   }
-  cat("  - performances overall repetitions: \t\tok\n")
-  #
+  
   # # generates convergence ids (iterations with best solutions)
   # if(!checkSubdir(algo = algo, subdir="ids")) {
   #   stop("You did not generate info tuning. Plase, run the \'extractIds.R\' script first.\n")

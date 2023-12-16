@@ -10,6 +10,8 @@ getTop15RFImportancePlot = function(metadataset) {
     aux = lapply(1:30, function(seed) {
     
         set.seed(seed)
+        options(mlr.debug.seed = seed)
+
         model     = mlr::train(task = mlrTask, learner = lrn)
         trueModel = model$learner.model
     
@@ -42,7 +44,6 @@ getTop15RFImportancePlot = function(metadataset) {
 
 }
 
-
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
@@ -58,12 +59,21 @@ metaAnalysis = function() {
     library(rpart.plot, quietly = TRUE, warn.conflicts = FALSE)
     library(mlr,        quietly = TRUE, warn.conflicts = FALSE)
     library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
+    library(dplyr,      quietly = TRUE, warn.conflicts = FALSE)
+
 
     # ------------------
     # creating output dir (plots)
     # ------------------
   
     dir.create("plots/", recursive = TRUE, showWarnings = FALSE)
+
+
+    # ------------------
+    # Required scripts
+    # ------------------
+    
+    source("R/getMetaLevelData.R")
 
     # ------------------
     # Reading meta-datasets
@@ -89,10 +99,14 @@ metaAnalysis = function() {
     ggsave(g.rpart, file="plots/rpart_RFimportanceTop15.eps",  units = "in", width = 9, height = 6, dpi = 500, pointsize = 20)
 
     # --------------------------
+    # Meta-level results from MtLSuite project
     # --------------------------
-  
-    # add meta-level results (pegar do: mTlSuite ou mtlAnalysis)
-    # add average performance plot results (pegar mtlAnalysis)
+
+    meta.files    = list.files(path = "data/metaResults",full.names = TRUE, recursive = TRUE)
+    meta.data     = getMetaLevelData(all.files = meta.files)
+    agg.meta.data = aggregateMetaLevelData(meta.data = meta.data)
+
+     
 
 }
 

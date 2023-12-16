@@ -1,11 +1,11 @@
-Package: TuningAnalysis
+Package: DecicionTreeTuningAnalysis
 Title: Automated hyperparameter ''tuning analysis''.
 Version: 0.0.2
 Authors@R: person("Rafael", "Gomes Mantovani", email = "rgmantovani@gmail.com", role = c("aut", "cre"))
 Description: 'TuningAnalysis' is an automated code to generate graphical hyperparameter tuning analysis.
 Depends: R (>= 3.3.2), mlr(>= 2.9), ggplot2, reshape2, checkmate, partykit, optparse
-Suggests: rpart, RWeka(>= 0.4), setwidth
+Suggests: rpart, RWeka(>= 0.4), setwidth, ranger
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true
-BugReports: https://github.com/rgmantovani/TuningAnalysis
+BugReports: https://github.com/rgmantovani/DecisionTreeTuningAnalysis

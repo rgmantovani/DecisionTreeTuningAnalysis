@@ -8,7 +8,8 @@ getAvgPerfScatterPlot = function(df.perf) {
 	g = g + geom_point() + theme_bw()
 	g = g + scale_color_manual(values=CUSTOM.COLORS[-1])
 	g = g + geom_abline (slope=1, linetype = "dashed", color="black")
-	g = g + labs(x = "Default performance", y = "Optimized performance", colour="Algorithm", shape="Algorithm")
+	g = g + labs(x = "Default performance", y = "Optimized performance", colour="Algorithm", 
+		shape="Algorithm")
   	g = g + theme(legend.title = element_blank())
   	return(g) 
 }

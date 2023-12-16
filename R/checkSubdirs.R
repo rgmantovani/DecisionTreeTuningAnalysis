@@ -1,9 +1,8 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-checkSubdir = function(algo, subdir) {
-
-  my.path = paste0("data/", algo, "/", subdir)
+checkSubdir = function(algo, space, subdir) {
+  my.path = paste0("data/hptuning_", space, "_space/", algo, "/", subdir)
   v1 = dir.exists(path = my.path)
   v2 = (length(list.files(path = my.path)) != 0)
   return(v1 & v2)

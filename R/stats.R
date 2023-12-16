@@ -1,13 +1,13 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getStatsDf = function(all.results, conf = 0.95) {
+getStatsDF = function(all.results, conf = 0.95) {
 
   alpha = 1 - conf
 
   inner.aux = lapply(all.results, function(mat) { 
   
-    max.id = which.max(colMeans(x = mat[, -1], na.rm = TRUE))
+    max.id = which.max(colMeans(x = mat[, -c(1,ncol(mat))], na.rm = TRUE))
     alg = mat[,names(max.id)]
     dfs = mat[,"defaults"]
     obj = wilcox.test(x = dfs, y = alg, paired = TRUE)
@@ -28,6 +28,7 @@ getStatsDf = function(all.results, conf = 0.95) {
         return("Other-Sign")
       }
     }
+  
   })
 
   df.stats = data.frame(do.call("rbind", inner.aux))

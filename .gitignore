@@ -4,16 +4,16 @@
 *.zip
 .DS_Store
 
-data/
-examples/
-info/
-draft/
-output/
-fanovaOutputs/
-tests/
-uploader/
-misc/
-old/
+# some inner files
+data/datasets/
+data/datasets.zip
+data/meta_features.RData
 
-extractStats.R
-reducedSpaceResults.R
+# not adding raw results because of size (too mant GB :/)
+data/hptuning_full_space/classif.rpart/results/
+data/hptuning_full_space/classif.J48/results/
+
+info/
+output/
+tests/
+old/

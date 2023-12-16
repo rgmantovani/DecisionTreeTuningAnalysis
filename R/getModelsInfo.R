@@ -3,21 +3,34 @@
 
 getModelsInfo = function(algo) {
 
-  files = list.files(path = paste("data", algo, "models", sep="/"), full.names=TRUE)
+  # ---------------------------------------------
+  # listing models' files previously extracted
+  # ---------------------------------------------
+  files = list.files(path = paste("data/hptuning_full_space", algo, "models_stats", sep="/"), 
+    full.names=TRUE)
+  
+  # ---------------------------------------------
+  # Retrieving models stats 
+  # ---------------------------------------------
   aux = lapply(files, function(file) {
-    return(getDatasetModelInfo(file = file))
+    return(getDatasetModelInfo(file = file, algo = algo))
   })
   
+  # ---------------------------------------------
+  # Generating a data frame
+  # ---------------------------------------------
+
   df.info = do.call("rbind", aux)
   data.id = as.numeric(as.factor(df.info$dataset))
   ret = cbind(df.info, data.id)
   return(ret)
+
 }
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getDatasetModelInfo = function(file) {
+getDatasetModelInfo = function(file, algo) {
 
   load(file, verbose = FALSE)
 
@@ -47,7 +60,7 @@ getDatasetModelInfo = function(file) {
   })
   df = data.frame(do.call("rbind", aux.tun))
   df$technique = unique(df.full$tun)
-  df$dataset = gsub(x=file, pattern=paste0("data|/|models|",algo,"|.RData"), replacement="")
+  df$dataset = gsub(x=file, pattern=paste0("data/hptuning_full_space/|/|models_stats|",algo,"|.RData"), replacement="")
   return(df)
 }
 

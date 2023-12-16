@@ -1,35 +1,6 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-# # algo = "J48"
-# # algo = "rpart"
-# algo = "classif.ctree"
-
-# measure = "loss"
-# # # measure = "rank"
-
-# algo.name = gsub(x = algo, pattern="classif.", replacement = "")
-# algo.path = paste("data", algo, "results", sep="/")
-# all.dirs  = list.files(path = algo.path, full.names = TRUE)
-
-# algo.path.list = getOptPath(algo = algo, all.dirs = all.dirs)
-
-# algo.path.list = lapply(algo.path.list, function(elem) {
-
-#   if(any(is.na(elem))) {
-#     return(NULL)
-#   } else {
-#     return(elem)
-#   }
-# })
-
-# algo.path.list = Filter(Negate(is.null), algo.path.list)
-
-# # algo.paths = lapply(algo.path.list, avgRankPath)
-# algo.paths = lapply(algo.path.list, avgLossPath)
-# df.algo.paths = Reduce("+", algo.paths)/length(algo.paths)
-# df = df.algo.paths
-
 lossCurvePlot = function(df, measure) {
 
   checkmate::assertChoice(x=measure, choices=c("rank", "loss")) 
@@ -54,12 +25,6 @@ lossCurvePlot = function(df, measure) {
   g = g + theme(legend.title = element_blank(), legend.text = element_text(size = 8))
   g = g + theme(legend.key.height = unit(0.3, "cm"), legend.key.width = unit(0.4, "cm"))
   g = g + labs(colour = "Technique", linetype = "Technique")
-
-  # ggsave(g, file = paste0("output/LossCurve_avgLoss_", algo, ".pdf"), dpi = 500,
-  #   width = 6.09, height = 2.17)
-
-  # ggsave(g, file = paste0("output/LossCurve_avgLoss_", algo, "_Rank.pdf"), dpi = 500,
-  #   width = 6.09, height = 2.17)
 
   return(g)
 }

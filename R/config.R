@@ -19,5 +19,9 @@ CUSTOM.COLORS = c("black", "purple", "green", "darkorange", "red",
 CUSTOM.LINETYPES = c("dotted", "solid", "solid", "solid", "solid",
   "solid", "solid", "dashed", "solid", "dashed", "solid")
 
+CUSTOM.SHAPES = c(16,18,3,8,4,10,12,16,18,3,8,4,10,12)
+
+LOCAL.COLOR = c("black", "darkred", "darkcyan")
+
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------

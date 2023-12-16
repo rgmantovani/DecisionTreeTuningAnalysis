@@ -51,18 +51,6 @@ getTop15RFImportancePlot = function(metadataset) {
 metaAnalysis = function() {
 
     # ------------------
-    # Loadingh required packages
-    # ------------------
-
-    library(ranger,     quietly = TRUE, warn.conflicts = FALSE)
-    library(rpart,      quietly = TRUE, warn.conflicts = FALSE)
-    library(rpart.plot, quietly = TRUE, warn.conflicts = FALSE)
-    library(mlr,        quietly = TRUE, warn.conflicts = FALSE)
-    library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
-    library(dplyr,      quietly = TRUE, warn.conflicts = FALSE)
-
-
-    # ------------------
     # creating output dir (plots)
     # ------------------
   
@@ -73,8 +61,8 @@ metaAnalysis = function() {
     # Required scripts
     # ------------------
     
-    source("R/getMetaLevelData.R")
-
+    devtools::load_all()
+    
     # ------------------
     # Reading meta-datasets
     # ------------------
@@ -102,12 +90,20 @@ metaAnalysis = function() {
     # Meta-level results from MtLSuite project
     # --------------------------
 
+    cat(" @ Plot: Random Forest (importance) \n")
+
     meta.files    = list.files(path = "data/metaResults",full.names = TRUE, recursive = TRUE)
     meta.data     = getMetaLevelData(all.files = meta.files)
     agg.meta.data = aggregateMetaLevelData(meta.data = meta.data)
+    df.stats      = getMetaLevelStatisticalDifferences(meta.data = meta.data, agg.meta.data = agg.meta.data)
 
-     
+    g.meta = getMetaLevelAvgPerformancePlot(data = agg.meta.data, df.stats = df.stats)
 
+    ggsave(g.meta, file = "plots/metalevel_averagePerformance.pdf",  width = 5.89, height = 2.65, dpi = 500)
+    ggsave(g.meta, file = "plots/metalevel_averagePerformance.jpeg", width = 5.89, height = 2.65, dpi = 500)
+    ggsave(g.meta, file = "plots/metalevel_averagePerformance.eps",  width = 5.89, height = 2.65, dpi = 500)
+
+    cat(" *** Done !!! \n")
 }
 
 #--------------------------------------------------------------------------------------------------

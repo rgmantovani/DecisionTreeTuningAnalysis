@@ -105,7 +105,7 @@ Rafael Gomes Mantovani (rgmantovani@gmail.com / rafaelmantovani@utfpr.edu.br), F
 
 ### References
 
-[01] Rafael Gomes Mantovani, Tomas Horvath, Ricardo Cerri, Sylvio Barbon Junior, Joaquin Vanschoren, André C. P. L. F. Carvalho. Better Trees: An empirical study on hyperparameter tuning of classification decision trees. pre-print available in arxiv: https://arxiv.org/abs/1812.02207.
+[01] Rafael Gomes Mantovani, Tomas Horvath, André L. D. Rossi, Ricardo Cerri, Sylvio Barbon Junior, Joaquin Vanschoren, André C. P. L. F. Carvalho. Better Trees: An empirical study on hyperparameter tuning of classification decision trees. pre-print available in arxiv: https://arxiv.org/abs/1812.02207.
 
 [02] B. Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus, Giuseppe Casalicchio, Zachary Jones. mlr: [Machine Learning in R. Journal of Machine Learning in R](https://github.com/mlr-org/mlr), v.17, n.170, 2016, pgs 1-5.
 

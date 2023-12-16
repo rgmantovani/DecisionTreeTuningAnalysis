@@ -51,7 +51,7 @@ getOptPath = function(algo, all.dirs) {
     opt.path.dir = gsub(x = data.dir, pattern = paste0("/results/", dataset), replacement = "")
     opt.path.dir = paste0(opt.path.dir, "/opt_paths/")
     outfile = paste0(opt.path.dir, "/path_", dataset, ".RData")
-    print(outfile)
+    # print(outfile)
 
     # ---------------------------------
     # ---------------------------------

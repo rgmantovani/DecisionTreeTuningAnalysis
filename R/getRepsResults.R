@@ -40,7 +40,7 @@ getRepsResults = function(algo, all.dirs) {
 
     pattern = paste0("../data/hptuning_full_space/|../data/hptuning_reduced_space/|",algo,"|/results/")
     dataset = gsub(x = data.dir, pattern = pattern, replacement = "")
-    cat("Dataset: ", dataset, "\n")
+    # cat("Dataset: ", dataset, "\n")
 
     # ----------------
     # exported file - if a new dataset is inserted, we dont need to extract its results again
@@ -48,11 +48,11 @@ getRepsResults = function(algo, all.dirs) {
     exported.file = paste0(exported.file, ".RData")
 
     if(!file.exists(exported.file)) {
-      cat("\t - exported for the first time.\n")
+      # cat("\t - exported for the first time.\n")
       df = extractPerformancesIntoDF(data.dir = data.dir, algo = algo, dataset = dataset)
       save(df, file = exported.file)
     } else {
-      cat("\t - loading existing file.\n")
+      # cat("\t - loading existing file.\n")
       load(exported.file)
     }
     # ----------------

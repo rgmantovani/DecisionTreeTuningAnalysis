@@ -13,7 +13,7 @@ getModelsInfo = function(algo) {
   # Retrieving models stats 
   # ---------------------------------------------
   aux = lapply(files, function(file) {
-    return(getDatasetModelInfo(file = file))
+    return(getDatasetModelInfo(file = file, algo = algo))
   })
   
   # ---------------------------------------------
@@ -30,7 +30,7 @@ getModelsInfo = function(algo) {
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getDatasetModelInfo = function(file) {
+getDatasetModelInfo = function(file, algo) {
 
   load(file, verbose = FALSE)
 

@@ -156,6 +156,18 @@ runAnalysis = function(algo) {
   
   #----------------------
   #----------------------
+
+  #TODO:
+  # add j48 meta-dataset with 95% (pegar do: mTlSuite ou mtlAnalysis)
+  # add rpart meta-dataset with 95% (pegar do: mTlSuite ou mtlAnalysis)
+  # add meta-level results (pegar do: mTlSuite ou mtlAnalysis)
+  # add average performance plot results (pegar: mtlAnalysis)
+  # add meta-level (RF) results (usar: fungal growth code)
+  # Add meta-level (DF) results (usar: fungal growth code)
+
+  #----------------------
+  #----------------------
+
   
   cat(" **** Finished !!! \n")
 
